@@ -9,9 +9,9 @@ import RootLayout from '@/_root/RootLayout';
 
 /**************  COMPONENTS  *************/
 import { Button, buttonVariants } from '@/components/ui/button';
-import { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField } from './components/ui/form';
-import { Input } from './components/ui/input';
-import { Label } from './components/ui/label';
+import { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField } from './ui/form';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 export {
   /****************  _AUTH  ****************/
