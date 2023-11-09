@@ -10,9 +10,9 @@ export default function SignupForm() {
   const form = useForm<z.infer<typeof signupValidationSchema>>({
     resolver: zodResolver(signupValidationSchema),
     defaultValues: {
-      name: 'Dr. Penguin',
-      username: 'SpaceCowboy69',
-      email: 'intergalactic@mailer.com',
+      name: '',
+      username: '',
+      email: '',
       password: '',
     },
   });
@@ -31,7 +31,21 @@ export default function SignupForm() {
         <h2 className='h3-bold md:h2-bold pt-5 sm:pt-12'>Create a new account</h2>
         <p className='text-light-3 small-medium md:base-regular mt-2'>To use DÜSH, enter your account details</p>
 
-        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-5 w-full mt-4'>
+          <FormField
+            control={form.control}
+            name='name'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input type='text' className='shad-input' placeholder='Dr. Penguin' {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name='username'
@@ -39,14 +53,42 @@ export default function SignupForm() {
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input placeholder='shadcn' {...field} />
+                  <Input type='text' className='shad-input' placeholder='SpaceCowboy69' {...field} />
                 </FormControl>
-                <FormDescription>This is your public display name.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type='submit'>Submit</Button>
+
+          <FormField
+            control={form.control}
+            name='email'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input type='email' className='shad-input' placeholder='spearmint-rhino@mindmelder.com' {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name='password'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input type='password' className='shad-input' {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button type='submit' className='shad-button_primary'>Submit</Button>
         </form>
       </div>
     </Form>
