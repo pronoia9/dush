@@ -10,6 +10,7 @@ import RootLayout from '@/_root/RootLayout';
 /**************  COMPONENTS  *************/
 import { Button, buttonVariants } from '@/components/ui/button';
 import { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField } from './components/ui/form';
+import { Input } from './components/ui/input';
 import { Label } from './components/ui/label';
 
 export {
@@ -25,5 +26,6 @@ export {
   /**************  COMPONENTS  *************/
   Button, buttonVariants,
   useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField,
+  Input,
   Label,
 };
