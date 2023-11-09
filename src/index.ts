@@ -8,7 +8,9 @@ import Home from '@/_root/pages/Home';
 import RootLayout from '@/_root/RootLayout';
 
 /**************  COMPONENTS  *************/
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField } from './components/ui/form';
+import { Label } from './components/ui/label';
 
 export {
   /****************  _AUTH  ****************/
@@ -21,5 +23,7 @@ export {
   RootLayout,
   
   /**************  COMPONENTS  *************/
-  Button,
+  Button, buttonVariants,
+  useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField,
+  Label,
 };
