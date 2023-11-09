@@ -9,12 +9,7 @@ export default function SignupForm() {
   // 1. Define your form.
   const form = useForm<z.infer<typeof signupValidationSchema>>({
     resolver: zodResolver(signupValidationSchema),
-    defaultValues: {
-      name: '',
-      username: '',
-      email: '',
-      password: '',
-    },
+    defaultValues: { name: '', username: '', email: '', password: '' },
   });
 
   // 2. Define a submit handler.
@@ -88,7 +83,9 @@ export default function SignupForm() {
             )}
           />
 
-          <Button type='submit' className='shad-button_primary'>Submit</Button>
+          <Button type='submit' className='shad-button_primary'>
+            Submit
+          </Button>
         </form>
       </div>
     </Form>
