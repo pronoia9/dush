@@ -35,10 +35,10 @@ export default function SignupForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Name</FormLabel>
+                <FormMessage />
                 <FormControl>
                   <Input type='text' className='shad-input' placeholder='Dr. Penguin' {...field} />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />
@@ -49,10 +49,10 @@ export default function SignupForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Username</FormLabel>
+                <FormMessage />
                 <FormControl>
                   <Input type='text' className='shad-input' placeholder='SpaceCowboy69' {...field} />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />
@@ -63,10 +63,10 @@ export default function SignupForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
+                <FormMessage />
                 <FormControl>
                   <Input type='email' className='shad-input' placeholder='spearmint-rhino@mindmelder.com' {...field} />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />
@@ -77,10 +77,10 @@ export default function SignupForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Password</FormLabel>
+                <FormMessage />
                 <FormControl>
                   <Input type='password' className='shad-input' {...field} />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />
