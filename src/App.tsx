@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 
-import { SigninForm, SignupForm, Home } from '.';
+import { AuthLayout, Home, RootLayout, SigninForm, SignupForm } from '.';
 import './globals.css';
 
 export default function App() {
@@ -8,11 +8,15 @@ export default function App() {
     <main className='flex h-screen'>
       <Routes>
         {/* public routes */}
-        <Route path='/sign-in' element={<SigninForm />} />
-        <Route path='/sign-up' element={<SignupForm />} />
+        <Route element={<AuthLayout />}>
+          <Route path='/sign-in' element={<SigninForm />} />
+          <Route path='/sign-up' element={<SignupForm />} />
+        </Route>
 
         {/* private routes */}
-        <Route index element={<Home />} />
+        <Route element={<RootLayout />}>
+          <Route index element={<Home />} />
+        </Route>
       </Routes>
     </main>
   );
