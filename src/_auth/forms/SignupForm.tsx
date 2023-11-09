@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Loader } from '@/components';
 import { signupValidationSchema } from '@/lib/validation';
+import { Link } from 'react-router-dom';
 
 export default function SignupForm() {
   const isLoading = false; // !TEMP
@@ -88,6 +89,10 @@ export default function SignupForm() {
           <Button type='submit' className='shad-button_primary'>
             {!isLoading ? 'Submit' : <Loader />}
           </Button>
+
+          <p className='text-small-regular text-light-2 text-center mt-2'>
+            Already have an accout? <Link to='/sign-in' className='text-primary-500 text-small-semibold'>Log in</Link> here.
+          </p>
         </form>
       </div>
     </Form>
