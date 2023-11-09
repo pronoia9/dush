@@ -8,6 +8,7 @@ import Home from './_root/pages/Home';
 import RootLayout from './_root/RootLayout';
 
 /**************  COMPONENTS  *************/
+import { Button } from './components/ui/button';
 
 export {
   /****************  _AUTH  ****************/
@@ -20,4 +21,5 @@ export {
   RootLayout,
   
   /**************  COMPONENTS  *************/
+  Button,
 };
