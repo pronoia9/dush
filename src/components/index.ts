@@ -8,6 +8,10 @@ import Home from '@/_root/pages/Home';
 import RootLayout from '@/_root/RootLayout';
 
 /**************  COMPONENTS  *************/
+// FORMS
+// SHARED
+import Loader from './shared/Loader';
+// UI
 import { Button, buttonVariants } from '@/components/ui/button';
 import { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField } from './ui/form';
 import { Input } from '@/components/ui/input';
@@ -24,6 +28,10 @@ export {
   RootLayout,
   
   /**************  COMPONENTS  *************/
+  // FORMS
+  // SHARED
+  Loader,
+  // UI
   Button, buttonVariants,
   useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField,
   Input,
