@@ -86,7 +86,7 @@ export default function SignupForm() {
             )}
           />
 
-          <Button type='submit' className='shad-button_primary'>
+          <Button type='submit' className='shad-button_primary mt-5'>
             {!isLoading ? 'Submit' : <Loader />}
           </Button>
 
