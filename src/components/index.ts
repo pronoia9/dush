@@ -13,9 +13,11 @@ import RootLayout from '@/_root/RootLayout';
 import Loader from './shared/Loader';
 // UI
 import { Button, buttonVariants } from '@/components/ui/button';
-import { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField } from './ui/form';
+import { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { ToastProvider, ToastViewport, Toast, ToastTitle, ToastDescription, ToastClose, ToastAction } from '@/components/ui/toast';
+import { Toaster } from '@/components/ui/toaster';
 
 export {
   /****************  _AUTH  ****************/
@@ -36,4 +38,6 @@ export {
   useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField,
   Input,
   Label,
+  ToastProvider, ToastViewport, Toast, ToastTitle, ToastDescription, ToastClose, ToastAction,
+  Toaster,
 };
