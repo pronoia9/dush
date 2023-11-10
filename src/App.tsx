@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 
-import { AuthLayout, Home, RootLayout, SigninForm, SignupForm } from '@/components';
+import { AuthLayout, Home, RootLayout, SigninForm, SignupForm, Toaster } from '@/components';
 import './globals.css';
 
 export default function App() {
@@ -18,6 +18,8 @@ export default function App() {
           <Route index element={<Home />} />
         </Route>
       </Routes>
+
+      <Toaster />
     </main>
   );
 }
