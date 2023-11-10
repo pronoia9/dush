@@ -18,6 +18,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ToastProvider, ToastViewport, Toast, ToastTitle, ToastDescription, ToastClose, ToastAction } from '@/components/ui/toast';
 import { Toaster } from '@/components/ui/toaster';
+import { useToast, toast } from '@/components/ui/use-toast';
 
 export {
   /****************  _AUTH  ****************/
@@ -40,4 +41,5 @@ export {
   Label,
   ToastProvider, ToastViewport, Toast, ToastTitle, ToastDescription, ToastClose, ToastAction,
   Toaster,
+  useToast, toast,
 };
