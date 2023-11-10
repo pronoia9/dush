@@ -6,7 +6,7 @@ import { INewUser } from '@/types';
 export async function createUserAccount(user: INewUser) {
   try {
     const newAccount = await account.create(ID.unique(), user.email, user.password, user.name);
-    console.log('newAccount', newAccount); //! TEMP
+    return newAccount;
     
   } catch (error) {
     console.log('createUserAccount error', error);
