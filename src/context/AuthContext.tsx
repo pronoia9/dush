@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
+import { getCurrentUser } from '@/lib/appwrite';
 import { IUser } from '@/types';
 
 export const INITIAL_USER = { id: '', name: '', username: '', email: '', imageUrl: '', bio: '' };
@@ -29,12 +30,41 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const checkAuthUser = async () => {};
+  const checkAuthUser = async () => {
+    try {
+      const currentAccount = await getCurrentUser();
+
+      if (currentAccount) {
+        // const { $id: id, name, username, email, imageUrl, bio } = currentAccount;
+        // setUser({ id, name, username, email, imageUrl, bio });
+        setUser({
+          id: currentAccount.$id,
+          name: currentAccount.name,
+          username: currentAccount.username,
+          email: currentAccount.email,
+          imageUrl: currentAccount.imageUrl,
+          bio: currentAccount.bio,
+        });
+        setIsAuthenticated(true);
+        
+        return true;
+      }
+      
+      return false;
+    } catch (error) {
+      console.log('error checking user', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const value = {
-    user, setUser,
-    isLoading, setIsLoading,
-    isAuthenticated, setIsAuthenticated,
+    user,
+    setUser,
+    isLoading,
+    setIsLoading,
+    isAuthenticated,
+    setIsAuthenticated,
     checkAuthUser,
   };
 
