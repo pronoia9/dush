@@ -36,3 +36,5 @@ export async function saveUserToDB(user: { accountId: string; name: string; emai
     console.log('saveUserToDB error', error);
   }
 }
+
+export async function signInAccount(user: { email: string; password: string }) {}
