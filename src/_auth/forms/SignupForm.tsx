@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Loader, useToast } from '@/components';
 import { useUserContext } from '@/context/AuthContext';
-import { useCreateUserAccount, useSignInAccount } from '@/lib/react-query/queriesAndMutations';
+import { useCreateUserAccount, useSignInAccount } from '@/lib/react-query';
 import { signupValidationSchema } from '@/lib/validation';
 
 export default function SignupForm() {
