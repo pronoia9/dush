@@ -4,20 +4,18 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Loader, useToast } from '@/components';
-import { useCreateUserAccountMutation } from '@/lib/react-query/queriesAndMutations';
+import { useCreateUserAccount } from '@/lib/react-query/queriesAndMutations';
 import { signupValidationSchema } from '@/lib/validation';
 
 export default function SignupForm() {
   const { toast } = useToast();
-  const { mutateAsync: createUserAccount, isLoading: isCreatingUser } = useCreateUserAccountMutation();
+  const { mutateAsync: createUserAccount, isLoading: isCreatingUser } = useCreateUserAccount();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof signupValidationSchema>>({
     resolver: zodResolver(signupValidationSchema),
     defaultValues: { name: '', username: '', email: '', password: '' },
   });
-
-  // const { mutateAsync: createUserAccount, isCreatingUser: isCreatingAccount } = useCreateUserAccountMutation();
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof signupValidationSchema>) {
