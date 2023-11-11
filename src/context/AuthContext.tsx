@@ -79,3 +79,5 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   // @ts-ignore
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
+
+export const useUserContext = () => useContext(AuthContext);
