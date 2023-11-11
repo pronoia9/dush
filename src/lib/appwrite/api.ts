@@ -23,7 +23,7 @@ export async function createUserAccount(user: INewUser) {
 
     return newUser;
   } catch (error) {
-    console.log('createUserAccount error', error);
+    console.log('creating user account error', error);
     return error;
   }
 }
@@ -33,8 +33,15 @@ export async function saveUserToDB(user: { accountId: string; name: string; emai
     const newUser = await databases.createDocument(appwriteConfig.databaseId, appwriteConfig.usersCollectionId, ID.unique(), user);
     return newUser;
   } catch (error) {
-    console.log('saveUserToDB error', error);
+    console.log('saving user to database error', error);
   }
 }
 
-export async function signInAccount(user: { email: string; password: string }) {}
+export async function signInAccount(user: { email: string; password: string }) {
+  try {
+    const session = await account.createEmailSession(user.email, user.password);
+    return session;
+  } catch (error) {
+    console.log('signing into account error', error);
+  }
+}
