@@ -4,12 +4,13 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Loader, useToast } from '@/components';
-import { useCreateUserAccount } from '@/lib/react-query/queriesAndMutations';
+import { useCreateUserAccount, useSignInAccount } from '@/lib/react-query/queriesAndMutations';
 import { signupValidationSchema } from '@/lib/validation';
 
 export default function SignupForm() {
   const { toast } = useToast();
   const { mutateAsync: createUserAccount, isLoading: isCreatingUser } = useCreateUserAccount();
+  const { mutateAsync: signInAccount, isLoading: isSigningIn } = useSignInAccount();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof signupValidationSchema>>({
@@ -19,12 +20,11 @@ export default function SignupForm() {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof signupValidationSchema>) {
-    toast({ title: 'Sign up failed. Please try again.' });
     const newUser = await createUserAccount(values);
-
     if (!newUser) return toast({ title: 'Sign up failed. Please try again.' });
 
-    // const session = await signInAccount();
+    const session = await signInAccount({ email: values.email, password: values.password });
+    if (!session)return toast({ title: 'Sign in failed. Please try again.' });
   }
 
   return (
