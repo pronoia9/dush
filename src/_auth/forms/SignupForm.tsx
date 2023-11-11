@@ -1,13 +1,16 @@
+import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
 
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Loader, useToast } from '@/components';
+import { useUserContext } from '@/context/AuthContext';
 import { useCreateUserAccount, useSignInAccount } from '@/lib/react-query/queriesAndMutations';
 import { signupValidationSchema } from '@/lib/validation';
 
 export default function SignupForm() {
+  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
+  const navigate = useNavigate();
   const { toast } = useToast();
   const { mutateAsync: createUserAccount, isLoading: isCreatingUser } = useCreateUserAccount();
   const { mutateAsync: signInAccount, isLoading: isSigningIn } = useSignInAccount();
@@ -24,7 +27,11 @@ export default function SignupForm() {
     if (!newUser) return toast({ title: 'Sign up failed. Please try again.' });
 
     const session = await signInAccount({ email: values.email, password: values.password });
-    if (!session)return toast({ title: 'Sign in failed. Please try again.' });
+    if (!session) return toast({ title: 'Sign in failed. Please try again.' });
+
+    const isLoggedIn = await checkAuthUser();
+    if (!isLoggedIn) form.reset(), navigate('/');
+    else toast({ title: 'Sign up failed. Please try again.' });
   }
 
   return (
