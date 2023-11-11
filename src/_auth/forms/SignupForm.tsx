@@ -3,12 +3,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
-import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Loader } from '@/components';
-import { createUserAccount } from '@/lib/appwrite';
+import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Loader, useToast } from '@/components';
+import { useCreateUserAccountMutation } from '@/lib/react-query/queriesAndMutations';
 import { signupValidationSchema } from '@/lib/validation';
 
 export default function SignupForm() {
-  const isLoading = false; // !TEMP
+  const { toast } = useToast();
+  const { mutateAsync: createUserAccount, isLoading: isCreatingUser } = useCreateUserAccountMutation();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof signupValidationSchema>>({
@@ -16,11 +17,16 @@ export default function SignupForm() {
     defaultValues: { name: '', username: '', email: '', password: '' },
   });
 
+  // const { mutateAsync: createUserAccount, isCreatingUser: isCreatingAccount } = useCreateUserAccountMutation();
+
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof signupValidationSchema>) {
+    toast({ title: 'Sign up failed. Please try again.' });
     const newUser = await createUserAccount(values);
-    console.log(newUser);
-    
+
+    if (!newUser) return toast({ title: 'Sign up failed. Please try again.' });
+
+    // const session = await signInAccount();
   }
 
   return (
@@ -88,11 +94,15 @@ export default function SignupForm() {
           />
 
           <Button type='submit' className='shad-button_primary mt-5'>
-            {!isLoading ? 'Submit' : <Loader />}
+            {!isCreatingUser ? 'Submit' : <Loader />}
           </Button>
 
           <p className='text-small-regular text-light-2 text-center mt-2'>
-            Already have an accout? <Link to='/sign-in' className='text-primary-500 text-small-semibold'>Log in</Link> here.
+            Already have an accout?{' '}
+            <Link to='/sign-in' className='text-primary-500 text-small-semibold'>
+              Log in
+            </Link>{' '}
+            here.
           </p>
         </form>
       </div>
