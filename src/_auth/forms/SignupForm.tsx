@@ -106,8 +106,7 @@ export default function SignupForm() {
             Already have an accout?{' '}
             <Link to='/sign-in' className='text-primary-500 text-small-semibold'>
               Log in
-            </Link>{' '}
-            here.
+            </Link>
           </p>
         </form>
       </div>
