@@ -72,7 +72,7 @@ export default function SigninForm() {
 
           <p className='text-small-regular text-light-2 text-center mt-2'>
             Don't have an accout?{' '}
-            <Link to='/sign-in' className='text-primary-500 text-small-semibold'>
+            <Link to='/sign-up' className='text-primary-500 text-small-semibold'>
               Sign up
             </Link>
           </p>
