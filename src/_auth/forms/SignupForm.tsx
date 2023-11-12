@@ -9,9 +9,9 @@ import { useCreateUserAccount, useSignInAccount } from '@/lib/react-query';
 import { signupValidationSchema } from '@/lib/validation';
 
 export default function SignupForm() {
-  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
   const { mutateAsync: createUserAccount, isLoading: isCreatingUser } = useCreateUserAccount();
   const { mutateAsync: signInAccount, isLoading: isSigningIn } = useSignInAccount();
 
