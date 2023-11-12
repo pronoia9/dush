@@ -11,6 +11,9 @@ import RootLayout from '@/_root/RootLayout';
 // FORMS
 // SHARED
 import Loader from './shared/Loader';
+import Bottombar from './shared/Bottombar';
+import LeftSidebar from './shared/LeftSidebar';
+import Topbar from './shared/Topbar';
 // UI
 import { Button, buttonVariants } from '@/components/ui/button';
 import { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField } from '@/components/ui/form';
@@ -34,6 +37,7 @@ export {
   // FORMS
   // SHARED
   Loader,
+  Bottombar, LeftSidebar, Topbar,
   // UI
   Button, buttonVariants,
   useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField,
