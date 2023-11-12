@@ -1,27 +1,27 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
 
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Loader, useToast } from '@/components';
 import { useUserContext } from '@/context/AuthContext';
 import { useSignInAccount } from '@/lib/react-query';
-import { SignupValidationSchema } from '@/lib/validation';
+import { SigninValidationSchema } from '@/lib/validation';
 
 export default function SigninForm() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
-  const { mutateAsync: signInAccount, isLoading: isSigningIn } = useSignInAccount();
+  const { mutateAsync: signInAccount } = useSignInAccount();
 
   // 1. Define your form.
-  const form = useForm<z.infer<typeof SignupValidationSchema>>({
-    resolver: zodResolver(SignupValidationSchema),
+  const form = useForm<z.infer<typeof SigninValidationSchema>>({
+    resolver: zodResolver(SigninValidationSchema),
     defaultValues: { email: '', password: '' },
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof SignupValidationSchema>) {
+  async function onSubmit(values: z.infer<typeof SigninValidationSchema>) {    
     const session = await signInAccount({ email: values.email, password: values.password });
     if (!session) return toast({ title: 'Sign in failed. Please try again.' });
 
@@ -67,7 +67,7 @@ export default function SigninForm() {
           />
 
           <Button type='submit' className='shad-button_primary mt-5'>
-            {!isUserLoading ? 'Submit' : <Loader />}
+            {!isUserLoading ? 'Sign In' : <Loader />}
           </Button>
 
           <p className='text-small-regular text-light-2 text-center mt-2'>
