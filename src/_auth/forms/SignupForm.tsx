@@ -30,7 +30,7 @@ export default function SignupForm() {
     if (!session) return toast({ title: 'Sign in failed. Please try again.' });
 
     const isLoggedIn = await checkAuthUser();
-    if (!isLoggedIn) form.reset(), navigate('/');
+    if (isLoggedIn) form.reset(), navigate('/');
     else toast({ title: 'Sign up failed. Please try again.' });
   }
 
