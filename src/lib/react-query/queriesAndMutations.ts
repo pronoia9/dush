@@ -14,3 +14,5 @@ export const useSignInAccount = () => {
     mutationFn: (user: { email: string; password: string }) => signInAccount(user),
   });
 };
+
+export const signOut = () => {}
