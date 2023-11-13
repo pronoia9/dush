@@ -50,7 +50,7 @@ export async function getCurrentUser() {
   try {
     const currentAccount = await account.get();
     if (!currentAccount) throw Error;
-    
+
     const currentUser = await databases.listDocuments(appwriteConfig.databaseId, appwriteConfig.usersCollectionId, [
       Query.equal('accountId', currentAccount.$id),
     ]);
@@ -61,3 +61,5 @@ export async function getCurrentUser() {
     console.log('error getting current user', error);
   }
 }
+
+export async function signOutAccount() {}
