@@ -4,8 +4,8 @@ import SignupForm from '@/_auth/forms/SignupForm';
 import AuthLayout from '@/_auth/AuthLayout';
 
 /****************  _ROOT  ****************/
-import Home from '@/_root/pages/Home';
 import RootLayout from '@/_root/RootLayout';
+import { AllUsers, CreatePost, EditPost, Explore, Home, PostDetails, Profile, Saved, UpdateProfile } from '@/_root/pages';
 
 /**************  COMPONENTS  *************/
 // FORMS
@@ -30,8 +30,8 @@ export {
   AuthLayout,
 
   /****************  _ROOT  ****************/
-  Home,
   RootLayout,
+  AllUsers, CreatePost, EditPost, Explore, Home, PostDetails, Profile, Saved, UpdateProfile,
   
   /**************  COMPONENTS  *************/
   // FORMS
