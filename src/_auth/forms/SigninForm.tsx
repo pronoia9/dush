@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Loader, useToast } from '@/components';
-import { useUserContext } from '@/context/AuthContext';
+import { useUserContext } from '@/context';
 import { useSignInAccount } from '@/lib/react-query';
 import { SigninValidationSchema } from '@/lib/validation';
 
