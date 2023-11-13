@@ -17,6 +17,6 @@ export const useSignInAccount = () => {
 
 export const signOut = () => {
   return useMutation({
-    mutationFn: () => signOutAccount(),
+    mutationFn: signOutAccount,
   });
 };
