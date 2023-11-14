@@ -18,12 +18,13 @@ import UpdateProfile from '@/_root/pages/UpdateProfile';
 
 /**************  COMPONENTS  *************/
 // FORMS
-import PostForm from './forms/PostForm';
+import PostForm from '@/components/forms/PostForm';
 // SHARED
-import Loader from './shared/Loader';
-import Bottombar from './shared/Bottombar';
-import LeftSidebar from './shared/LeftSidebar';
-import Topbar from './shared/Topbar';
+import Loader from '@/components/shared/Loader';
+import Bottombar from '@/components/shared/Bottombar';
+import LeftSidebar from '@/components/shared/LeftSidebar';
+import Topbar from '@/components/shared/Topbar';
+import FileUploader from '@/components/shared/FileUploader';
 // UI
 import { Button, buttonVariants } from '@/components/ui/button';
 import { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField } from '@/components/ui/form';
@@ -50,6 +51,7 @@ export {
   // SHARED
   Loader,
   Bottombar, LeftSidebar, Topbar,
+  FileUploader,
   // UI
   Button, buttonVariants,
   useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField,
