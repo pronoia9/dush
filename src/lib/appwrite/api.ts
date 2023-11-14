@@ -70,3 +70,5 @@ export async function signOutAccount() {
     console.log('error signing out', error);
   }
 }
+
+export async function createPost(post: any) { }
