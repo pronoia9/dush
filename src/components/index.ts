@@ -18,6 +18,7 @@ import UpdateProfile from '@/_root/pages/UpdateProfile';
 
 /**************  COMPONENTS  *************/
 // FORMS
+import PostForm from './forms/PostForm';
 // SHARED
 import Loader from './shared/Loader';
 import Bottombar from './shared/Bottombar';
@@ -44,6 +45,7 @@ export {
   
   /**************  COMPONENTS  *************/
   // FORMS
+  PostForm,
   // SHARED
   Loader,
   Bottombar, LeftSidebar, Topbar,
