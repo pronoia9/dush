@@ -76,6 +76,11 @@ export async function createPost(post: INewPost) {
     if (!uploadedFile) throw Error;
 
     const fileUrl = getFilePreview(uploadedFile.$id);
+    if (!fileUrl) {
+      deleteFile(uploadedFile.$id);
+      throw Error;
+    }
+
     // const newPost = await databases.createDocument(appwriteConfig.databaseId, appwriteConfig.postsCollectionId, ID.unique(), post);
     // return newPost;
   } catch (error) {
@@ -98,5 +103,14 @@ export async function getFilePreview(fileId: string) {
     return fileUrl;
   } catch (error) {
     console.log('error getting file preview', error);
+  }
+}
+
+export async function deleteFile(fileId: string) {
+  try {
+    await storage.deleteFile(appwriteConfig.storageId, fileId);
+    return { status: 'ok' };
+  } catch (error) {
+    console.log('error deleting file', error);
   }
 }
