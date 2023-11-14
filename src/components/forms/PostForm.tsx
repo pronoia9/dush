@@ -1,11 +1,17 @@
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Models } from 'appwrite';
 
-import { Button, FileUploader, Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, Input, Textarea } from '@/components';
+import { Button, FileUploader, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Textarea } from '@/components';
 import { PostValidation } from '@/lib/validation';
 
-export default function PostForm({ post }: any) {
+type PostFormProps = {
+  post?: Models.Document;
+  action: 'Create' | 'Update';
+};
+
+export default function PostForm({ post }: PostFormProps) {
   // 1. Define your form.
   const form = useForm<z.infer<typeof PostValidation>>({
     resolver: zodResolver(PostValidation),
@@ -19,8 +25,6 @@ export default function PostForm({ post }: any) {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof PostValidation>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
   }
 
@@ -62,7 +66,7 @@ export default function PostForm({ post }: any) {
             <FormItem>
               <FormLabel className='shad-form_label'>Add Location</FormLabel>
               <FormControl>
-                <Input type='text' className='shad-input' />
+                <Input type='text' className='shad-input' {...field} />
               </FormControl>
               <FormMessage className='shad-form_message' />
             </FormItem>
@@ -76,7 +80,7 @@ export default function PostForm({ post }: any) {
             <FormItem>
               <FormLabel className='shad-form_label'>Add Tags (separated by comma " , ")</FormLabel>
               <FormControl>
-                <Input type='text' className='shad-input' placeholder='Art, Expression, Learning, Humor' />
+                <Input type='text' className='shad-input' placeholder='Art, Expression, Learning, Humor' {...field} />
               </FormControl>
               <FormMessage className='shad-form_message' />
             </FormItem>
