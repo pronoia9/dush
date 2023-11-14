@@ -12,7 +12,7 @@ export const SigninValidation = z.object({
   password: z.string().min(8, { message: 'Whoa there! Passwords should be tough, like a fortress!' }),
 });
 
-export const PostsValidation = z.object({
+export const PostValidation = z.object({
   caption: z
     .string()
     .min(5, { message: 'Hold your horses! Your caption needs to be at least 5 characters. Make it snappy, like a stand-up comedian!' })
