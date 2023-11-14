@@ -29,6 +29,7 @@ import { Button, buttonVariants } from '@/components/ui/button';
 import { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { ToastProvider, ToastViewport, Toast, ToastTitle, ToastDescription, ToastClose, ToastAction } from '@/components/ui/toast';
 import { Toaster } from '@/components/ui/toaster';
 import { useToast, toast } from '@/components/ui/use-toast';
@@ -54,6 +55,7 @@ export {
   useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField,
   Input,
   Label,
+  Textarea,
   ToastProvider, ToastViewport, Toast, ToastTitle, ToastDescription, ToastClose, ToastAction,
   Toaster,
   useToast, toast,
