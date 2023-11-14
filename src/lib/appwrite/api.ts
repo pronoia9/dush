@@ -72,17 +72,35 @@ export async function signOutAccount() {
 
 export async function createPost(post: INewPost) {
   try {
+    // Upload image to storage
     const uploadedFile = await uploadFile(post.file[0]);
     if (!uploadedFile) throw Error;
 
+    // Get file url
     const fileUrl = getFilePreview(uploadedFile.$id);
     if (!fileUrl) {
       deleteFile(uploadedFile.$id);
       throw Error;
     }
 
-    // const newPost = await databases.createDocument(appwriteConfig.databaseId, appwriteConfig.postsCollectionId, ID.unique(), post);
-    // return newPost;
+    // Convert tags
+    const tags = post.tags?.replace(/ /g, '').split(',') || [];
+
+    // Save post to database
+    const newPost = await databases.createDocument(appwriteConfig.databaseId, appwriteConfig.postsCollectionId, ID.unique(), {
+      creator: post.userId,
+      caption: post.caption,
+      imageUrl: fileUrl,
+      imageId: uploadedFile.$id,
+      location: post.location,
+      tags,
+    });
+    if (!newPost) {
+      deleteFile(uploadedFile.$id);
+      throw Error;
+    }
+
+    return newPost;
   } catch (error) {
     console.log('error creating post', error);
   }
