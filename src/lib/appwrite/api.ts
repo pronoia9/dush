@@ -72,7 +72,10 @@ export async function signOutAccount() {
 
 export async function createPost(post: INewPost) {
   try {
-    // const uploadedFile = await uploadFile(post.file[0]);
+    const uploadedFile = await uploadFile(post.file[0]);
+    if (!uploadedFile) throw Error;
+
+    const fileUrl = getFilePreview(uploadedFile.$id);
     // const newPost = await databases.createDocument(appwriteConfig.databaseId, appwriteConfig.postsCollectionId, ID.unique(), post);
     // return newPost;
   } catch (error) {
@@ -86,5 +89,14 @@ export async function uploadFile(file: File) {
     return uploadedFile;
   } catch (error) {
     console.log('error uploading file', error);
+  }
+}
+
+export async function getFilePreview(fileId: string) {
+  try {
+    const fileUrl = storage.getFilePreview(appwriteConfig.storageId, fileId, 2000, 2000, 'top', 100);
+    return fileUrl;
+  } catch (error) {
+    console.log('error getting file preview', error);
   }
 }
