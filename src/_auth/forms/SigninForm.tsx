@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Loader, useToast } from '@/components';
 import { useUserContext } from '@/context';
 import { useSignInAccount } from '@/lib/react-query';
-import { SigninValidationSchema } from '@/lib/validation';
+import { SigninValidation } from '@/lib/validation';
 
 export default function SigninForm() {
   const navigate = useNavigate();
@@ -15,13 +15,13 @@ export default function SigninForm() {
   const { mutateAsync: signInAccount } = useSignInAccount();
 
   // 1. Define your form.
-  const form = useForm<z.infer<typeof SigninValidationSchema>>({
-    resolver: zodResolver(SigninValidationSchema),
+  const form = useForm<z.infer<typeof SigninValidation>>({
+    resolver: zodResolver(SigninValidation),
     defaultValues: { email: '', password: '' },
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof SigninValidationSchema>) {    
+  async function onSubmit(values: z.infer<typeof SigninValidation>) {    
     const session = await signInAccount({ email: values.email, password: values.password });
     if (!session) return toast({ title: 'Sign in failed. Please try again.' });
 
