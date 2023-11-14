@@ -1,9 +1,12 @@
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Models } from 'appwrite';
 
-import { Button, FileUploader, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Textarea } from '@/components';
+import { Button, FileUploader, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Loader, Textarea, toast } from '@/components';
+import { useUserContext } from '@/context';
+import { useCreatePost } from '@/lib/react-query';
 import { PostValidation } from '@/lib/validation';
 
 type PostFormProps = {
@@ -12,6 +15,10 @@ type PostFormProps = {
 };
 
 export default function PostForm({ post }: PostFormProps) {
+  const navigate = useNavigate();
+  const { mutateAsync: createPost, isLoading: isLoadingCreate } = useCreatePost();
+  const { user } = useUserContext();
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof PostValidation>>({
     resolver: zodResolver(PostValidation),
@@ -24,8 +31,10 @@ export default function PostForm({ post }: PostFormProps) {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof PostValidation>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof PostValidation>) {
+    const newPost = await createPost({ ...values, userId: user.id });
+    if (!newPost) toast({ title: 'Please try again.' });
+    else navigate('/');
   }
 
   return (
@@ -89,10 +98,10 @@ export default function PostForm({ post }: PostFormProps) {
 
         <div className='flex gap-4 items-center justify-end'>
           <Button type='button' className='shad-button_dark_4' style={{ maxHeight: '2.5rem' }}>
-            Submit
+            Cancel
           </Button>
           <Button type='submit' className='shad-button_primary whitespace-nowrap'>
-            Submit
+            {isLoadingCreate ? <Loader /> : 'Submit'}
           </Button>
         </div>
       </form>
