@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Models } from 'appwrite';
 
+import { PostStats } from '@/components';
 import { useUserContext } from '@/context';
 import { multiFormatDateString } from '@/lib/utils';
 
@@ -46,6 +47,8 @@ export default function PostCard({ post }: { post: Models.Document }) {
 
         <img src={post.imageUrl || '/assets/icons/profile-placeholder.svg'} className='post-card_img' alt='post image' />
       </Link>
+
+      <PostStats post={post} userId={user.id} />
     </div>
   );
 }
