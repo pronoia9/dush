@@ -132,3 +132,17 @@ export async function deleteFile(fileId: string) {
     console.log('error deleting file', error);
   }
 }
+
+export async function getRecentPosts() {
+  const posts = await databases.listDocuments(appwriteConfig.databaseId, appwriteConfig.postsCollectionId, [
+    Query.orderDesc('$createdAt'),
+    Query.limit(20),
+  ]);
+  if (!posts) throw Error;
+  return posts;
+  // try {
+  // } catch (error) {
+  //   console.log('error getting recent posts', error);
+  // }
+  // return [];
+}
