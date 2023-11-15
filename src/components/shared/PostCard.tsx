@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
 import { Models } from 'appwrite';
 
+import { useUserContext } from '@/context';
 import { multiFormatDateString } from '@/lib/utils';
 
 export default function PostCard({ post }: { post: Models.Document }) {
+  const { user } = useUserContext();
+
+  if (!post.creator) return;
   return (
     <div className='post-card'>
       <div className='flex-between'>
@@ -20,6 +24,12 @@ export default function PostCard({ post }: { post: Models.Document }) {
             </div>
           </div>
         </div>
+
+        {user.id === post.creator.$id && (
+          <Link to={`/update-post/${post.$id}`}>
+            <img src='/assets/icons/edit.svg' alt='edit' width={20} height={20} />
+          </Link>
+        )}
       </div>
     </div>
   );
