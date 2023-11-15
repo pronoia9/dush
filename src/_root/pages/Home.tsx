@@ -14,10 +14,11 @@ export default function Home() {
             <Loader />
           ) : (
             <ul className='flex flex-col flex-1 gap-9 w-full'>
-              {posts?.documents.map((post: Models.Document, index) => {
-                console.log(post);
-                return <li className='' key={`recent-posts-${index}`}><PostCard post={post} /></li>;
-              })}
+              {posts?.documents.map((post: Models.Document, index) => (
+                <li className='' key={`recent-posts-${index}`}>
+                  <PostCard post={post} />
+                </li>
+              ))}
             </ul>
           )}
         </div>
