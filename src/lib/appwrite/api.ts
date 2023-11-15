@@ -166,6 +166,16 @@ export async function savePost(postId: string, userId: string) {
     if (!updatedPost) throw Error;
     return updatedPost;
   } catch (error) {
-    console.log('error liking post', error);
+    console.log('error saving post', error);
+  }
+}
+
+export async function deleteSavedPost(savedRecordId: string) {
+  try {
+    const statusCode = await databases.deleteDocument(appwriteConfig.databaseId, appwriteConfig.savesCollectionId, savedRecordId);
+    if (!statusCode) throw Error;
+    return statusCode;
+  } catch (error) {
+    console.log('error deleting saved post', error);
   }
 }
