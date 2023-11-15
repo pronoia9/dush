@@ -31,6 +31,19 @@ export default function PostCard({ post }: { post: Models.Document }) {
           </Link>
         )}
       </div>
+
+      <Link to={`/posts/${post.$id}`}>
+        <div className='small-medium lg:base-medium py-5'>
+          <p>{post.caption}</p>
+          <ul className='flex gap-1 mt-2'>
+            {post.tags.map((tag: string) => (
+              <li key={tag} className='text-light-3'>
+                #{tag}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Link>
     </div>
   );
 }
