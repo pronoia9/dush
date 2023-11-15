@@ -43,46 +43,9 @@ export default function PostCard({ post }: { post: Models.Document }) {
             ))}
           </ul>
         </div>
+
+        <img src={post.imageUrl || '/assets/icons/profile-placeholder.svg'} className='post-card_img' alt='post image' />
       </Link>
     </div>
   );
 }
-
-// {
-//   "caption": "caption",
-//   "tags": [
-//     "Fantasy"
-//   ],
-//   "imageUrl": "[]",
-//   "imageId": "",
-//   "location": "N/A",
-//   "$id": "",
-//   "$createdAt": "2023-11-14T22:11:43.341+00:00",
-//   "$updatedAt": "2023-11-14T22:11:43.341+00:00",
-//   "$permissions": [
-//     "read(\"user:\")",
-//     "update(\"user:\")",
-//     "delete(\"user:\")"
-//   ],
-//   "creator": {
-//     "name": "Kevin Bacon",
-//     "username": "BaconImpersonator",
-//     "accountId": "",
-//     "email": "bacon@hollywoodmail.com",
-//     "bio": null,
-//     "imageId": null,
-//     "imageUrl": "https://cloud.appwrite.io/v1/avatars/initials?name=Kevin+Bacon&project=654b9597a269a93e30f3",
-//     "$id": "",
-//     "$createdAt": "2023-11-14T18:42:08.257+00:00",
-//     "$updatedAt": "2023-11-14T18:42:08.257+00:00",
-//     "$permissions": [],
-//     "liked": [],
-//     "save": [],
-//     "$databaseId": "",
-//     "$collectionId": ""
-//   },
-//   "likes": [],
-//   "save": [],
-//   "$databaseId": "",
-//   "$collectionId": ""
-// }
