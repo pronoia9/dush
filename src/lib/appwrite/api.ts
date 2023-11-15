@@ -146,3 +146,13 @@ export async function getRecentPosts() {
   // }
   // return [];
 }
+
+export async function likePost(postId: string, likesArray: string[]) {
+  try {
+    const updatedPost = await databases.updateDocument(appwriteConfig.databaseId, appwriteConfig.postsCollectionId, postId, { likes: likesArray });
+    if (!updatedPost) throw Error;
+    return updatedPost;
+  } catch (error) {
+    console.log('error liking post', error);
+  }
+}
