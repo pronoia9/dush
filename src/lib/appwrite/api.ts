@@ -108,20 +108,20 @@ export async function createPost(post: INewPost) {
 }
 
 export async function updatePost(post: IUpdatePost) {
-  const hasFileToUpdate = post.file?.length > 0;
+  const hasFileToUpdate = post.file.length > 0;
 
   try {
     let image = { imageUrl: post.imageUrl, imageId: post.imageId };
-
+    
     if (hasFileToUpdate) {
-      // Upload image to storage
+      // Upload new file to appwrite storage
       const uploadedFile = await uploadFile(post.file[0]);
       if (!uploadedFile) throw Error;
 
-      // Get file url
+      // Get new file url
       const fileUrl = getFilePreview(uploadedFile.$id);
       if (!fileUrl) {
-        deleteFile(uploadedFile.$id);
+        await deleteFile(uploadedFile.$id);
         throw Error;
       }
 
@@ -138,12 +138,18 @@ export async function updatePost(post: IUpdatePost) {
       imageUrl: image.imageUrl,
       imageId: image.imageId,
       location: post.location,
-      tags,
+      tags: tags,
     });
+
+    // Failed to update
     if (!updatedPost) {
-      deleteFile(post.imageId);
+      // Delete new file that has been recently uploaded
+      if (hasFileToUpdate) await deleteFile(image.imageId);
       throw Error;
     }
+
+    // Safely delete old file after successful update
+    if (hasFileToUpdate) await deleteFile(post.imageId);
 
     return updatedPost;
   } catch (error) {
