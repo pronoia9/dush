@@ -147,7 +147,7 @@ export async function updatePost(post: IUpdatePost) {
 
     return updatedPost;
   } catch (error) {
-    console.log('error creating post', error);
+    console.log('error updating post', error);
   }
 }
 
