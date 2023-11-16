@@ -179,3 +179,13 @@ export async function deleteSavedPost(savedRecordId: string) {
     console.log('error deleting saved post', error);
   }
 }
+
+export async function getPostsById(postId: string) {
+  try {
+    const posts = await databases.getDocument(appwriteConfig.databaseId, appwriteConfig.postsCollectionId, postId);
+    if (!posts) throw Error;
+    return posts;
+  } catch (error) {
+    console.log('error getting posts by id', error);
+  }
+}
