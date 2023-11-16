@@ -23,7 +23,19 @@ export default function PostStats({ post, userId }: { post: Models.Document; use
     likePost({ postId: post.$id, likesArray: newLikes });
   };
 
-  const handleSavePost = () => {};
+  const handleSavePost = (e: MouseEvent) => {
+    e.stopPropagation();
+
+    const savedPostRecord = currentUser?.save.find((record: Models.Document) => record.$id === post.$id);
+
+    if (savedPostRecord) {
+      setIsSaved(false);
+      deleteSavedPost(savedPostRecord.$id);
+    } else {
+      setIsSaved(true);
+      savePost({ postId: post.$id, userId });
+    }
+  };
 
   useEffect(() => {}, [likes]);
 
