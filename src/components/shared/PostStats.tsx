@@ -2,7 +2,7 @@ import { Models } from 'appwrite';
 
 import { useUserContext } from '@/context';
 import { useDeleteSavedPost, useLikePost, useSavePost } from '@/lib/react-query';
-import { useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import { checkIsLiked } from '@/lib/utils';
 
 export default function PostStats({ post, userId }: { post: Models.Document; userId: string }) {
@@ -37,7 +37,14 @@ export default function PostStats({ post, userId }: { post: Models.Document; use
       </div>
 
       <div className='flex gap-2'>
-        <img src={`/assets/icons/save${isSaved ? 'd' : ''}.svg`} alt='save' width={20} height={20} onClick={handleSavePost} className='cursor-pointer' />
+        <img
+          src={`/assets/icons/save${isSaved ? 'd' : ''}.svg`}
+          alt='save'
+          width={20}
+          height={20}
+          onClick={handleSavePost}
+          className='cursor-pointer'
+        />
       </div>
     </div>
   );
