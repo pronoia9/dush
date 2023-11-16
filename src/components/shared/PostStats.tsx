@@ -1,8 +1,8 @@
+import { MouseEvent, useEffect, useState } from 'react';
 import { Models } from 'appwrite';
 
 import { useUserContext } from '@/context';
 import { useDeleteSavedPost, useLikePost, useSavePost } from '@/lib/react-query';
-import { MouseEvent, useEffect, useState } from 'react';
 import { checkIsLiked } from '@/lib/utils';
 
 export default function PostStats({ post, userId }: { post: Models.Document; userId: string }) {
