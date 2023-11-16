@@ -89,7 +89,9 @@ export default function PostForm({ post, action }: PostFormProps) {
           name='tags'
           render={({ field }) => (
             <FormItem>
-              <FormLabel className='shad-form_label'>{preTitle} Tags (separated by comma " , ")</FormLabel>
+              <FormLabel className='shad-form_label'>
+                {preTitle} Tags <em>(separated by comma "art, music" or hashtag "#art #music")</em>
+              </FormLabel>
               <FormControl>
                 <Input type='text' className='shad-input' placeholder='Art, Expression, Learning, Humor' {...field} />
               </FormControl>
