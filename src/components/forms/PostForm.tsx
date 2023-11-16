@@ -105,7 +105,7 @@ export default function PostForm({ post, action }: PostFormProps) {
             Cancel
           </Button>
           <Button type='submit' className='shad-button_primary whitespace-nowrap'>
-            {isLoadingCreate ? <Loader /> : 'Submit'}
+            {isLoadingCreate ? <Loader /> : action === 'Create' ? 'Submit' : 'Update'}
           </Button>
         </div>
       </form>
