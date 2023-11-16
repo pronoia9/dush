@@ -5,7 +5,7 @@ import { Button } from '@/components';
 
 export default function FileUploader({ fieldChange, mediaUrl }: { fieldChange: (FILES: File[]) => void; mediaUrl: string }) {
   const [file, setFile] = useState<File[]>([]);
-  const [fileUrl, setFileUrl] = useState('');
+  const [fileUrl, setFileUrl] = useState(mediaUrl);
 
   const onDrop = useCallback(
     (acceptedFiles: FileWithPath[]) => {
