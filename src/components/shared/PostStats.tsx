@@ -3,6 +3,7 @@ import { Models } from 'appwrite';
 
 import { useDeleteSavedPost, useGetCurrentUser, useLikePost, useSavePost } from '@/lib/react-query';
 import { checkIsLiked } from '@/lib/utils';
+import { Loader } from '..';
 
 export default function PostStats({ post, userId }: { post: Models.Document; userId: string }) {
   // Extract the list of user IDs who liked the post from the post object
@@ -13,9 +14,13 @@ export default function PostStats({ post, userId }: { post: Models.Document; use
 
   // Destructure and get mutations and data from custom React Query hooks
   const { mutate: likePost } = useLikePost(),
-    { mutate: savePost } = useSavePost(),
-    { mutate: deleteSavedPost } = useDeleteSavedPost(),
+    { mutate: savePost, isLoading: isSavingPost } = useSavePost(),
+    { mutate: deleteSavedPost, isLoading: isDeletingPost } = useDeleteSavedPost(),
     { data: currentUser } = useGetCurrentUser();
+
+  // Check if the post is already saved by the current user
+  const savedPostRecord = currentUser?.save.find((record: Models.Document) => record.post.$id === post.$id);
+  useEffect(() => setIsSaved(!!savedPostRecord), [currentUser]);
 
   // Handle the like action for a post
   const handleLikePost = (e: MouseEvent) => {
@@ -32,9 +37,6 @@ export default function PostStats({ post, userId }: { post: Models.Document; use
   const handleSavePost = (e: MouseEvent) => {
     e.stopPropagation();
 
-    // Check if the post is already saved by the current user
-    const savedPostRecord = currentUser?.save.find((record: Models.Document) => record.$id === post.$id);
-
     // Toggle the saved status and trigger the appropriate mutation
     if (savedPostRecord) {
       setIsSaved(false);
@@ -44,12 +46,6 @@ export default function PostStats({ post, userId }: { post: Models.Document; use
       savePost({ postId: post.$id, userId });
     }
   };
-
-  // Effect to be executed when the 'likes' state changes (if needed in the future)
-  useEffect(() => {
-    // Add any logic that should be executed when 'likes' changes
-    // For example, triggering additional actions or side effects
-  }, [likes]);
 
   // Render the component UI
   return (
@@ -70,14 +66,18 @@ export default function PostStats({ post, userId }: { post: Models.Document; use
 
       <div className='flex gap-2'>
         {/* Save button with dynamic icon based on whether the post is saved */}
-        <img
-          src={`/assets/icons/save${isSaved ? 'd' : ''}.svg`}
-          alt='save'
-          width={20}
-          height={20}
-          onClick={handleSavePost}
-          className='cursor-pointer'
-        />
+        {isSavingPost || isDeletingPost ? (
+          <Loader />
+        ) : (
+          <img
+            src={`/assets/icons/save${isSaved ? 'd' : ''}.svg`}
+            alt='save'
+            width={20}
+            height={20}
+            onClick={handleSavePost}
+            className='cursor-pointer'
+          />
+        )}
       </div>
     </div>
   );
