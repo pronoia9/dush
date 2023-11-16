@@ -1,8 +1,7 @@
 import { MouseEvent, useEffect, useState } from 'react';
 import { Models } from 'appwrite';
 
-import { useUserContext } from '@/context';
-import { useDeleteSavedPost, useLikePost, useSavePost } from '@/lib/react-query';
+import { useDeleteSavedPost, useGetCurrentUser, useLikePost, useSavePost } from '@/lib/react-query';
 import { checkIsLiked } from '@/lib/utils';
 
 export default function PostStats({ post, userId }: { post: Models.Document; userId: string }) {
@@ -14,7 +13,7 @@ export default function PostStats({ post, userId }: { post: Models.Document; use
     { mutate: savePost } = useSavePost(),
     { mutate: deleteSavedPost } = useDeleteSavedPost();
 
-  const { user } = useUserContext();
+  const { data: currentUser } = useGetCurrentUser();
 
   const handleLikePost = (e: MouseEvent) => {
     e.stopPropagation();
