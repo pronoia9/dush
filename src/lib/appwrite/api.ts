@@ -1,7 +1,7 @@
 import { ID, Query } from 'appwrite';
 
 import { appwriteConfig, account, avatars, databases, storage } from '@/lib/appwrite';
-import { INewPost, INewUser } from '@/types';
+import { INewPost, INewUser, IUpdatePost } from '@/types';
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -85,7 +85,7 @@ export async function createPost(post: INewPost) {
 
     // Convert tags
     const tagType = post.tags?.includes('#') ? '#' : ',';
-    const tags = post.tags?.replace(/ /g, '').replace(tagType === '#' ? ',' : '#', '').split(tagType) || [];
+    const tags = post.tags?.replace(/ /g, '').split(tagType) || [];
 
     // Save post to database
     const newPost = await databases.createDocument(appwriteConfig.databaseId, appwriteConfig.postsCollectionId, ID.unique(), {
@@ -102,6 +102,50 @@ export async function createPost(post: INewPost) {
     }
 
     return newPost;
+  } catch (error) {
+    console.log('error creating post', error);
+  }
+}
+
+export async function updatePost(post: IUpdatePost) {
+  const hasFileToUpdate = post.file?.length > 0;
+
+  try {
+    let image = { imageUrl: post.imageUrl, imageId: post.imageId };
+
+    if (hasFileToUpdate) {
+      // Upload image to storage
+      const uploadedFile = await uploadFile(post.file[0]);
+      if (!uploadedFile) throw Error;
+
+      // Get file url
+      const fileUrl = getFilePreview(uploadedFile.$id);
+      if (!fileUrl) {
+        deleteFile(uploadedFile.$id);
+        throw Error;
+      }
+
+      image = { ...image, imageUrl: fileUrl, imageId: uploadedFile.$id };
+    }
+
+    // Convert tags
+    const tagType = post.tags?.includes('#') ? '#' : ',';
+    const tags = post.tags?.replace(/ /g, '').split(tagType) || [];
+
+    // Update post in the database
+    const updatedPost = await databases.updateDocument(appwriteConfig.databaseId, appwriteConfig.postsCollectionId, post.postId, {
+      caption: post.caption,
+      imageUrl: image.imageUrl,
+      imageId: image.imageId,
+      location: post.location,
+      tags,
+    });
+    if (!updatedPost) {
+      deleteFile(post.imageId);
+      throw Error;
+    }
+
+    return updatedPost;
   } catch (error) {
     console.log('error creating post', error);
   }
