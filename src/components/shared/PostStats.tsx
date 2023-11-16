@@ -5,46 +5,57 @@ import { useDeleteSavedPost, useGetCurrentUser, useLikePost, useSavePost } from 
 import { checkIsLiked } from '@/lib/utils';
 
 export default function PostStats({ post, userId }: { post: Models.Document; userId: string }) {
+  // Extract the list of user IDs who liked the post from the post object
   const likesList = post.likes.map((user: Models.Document) => user.$id);
+  // Initialize state variables for likes and saved status
   const [likes, setLikes] = useState(likesList);
   const [isSaved, setIsSaved] = useState(false);
 
+  // Destructure and get mutations and data from custom React Query hooks
   const { mutate: likePost } = useLikePost(),
     { mutate: savePost } = useSavePost(),
     { mutate: deleteSavedPost } = useDeleteSavedPost(),
     { data: currentUser } = useGetCurrentUser();
 
-  // Function to handle the like post event
+  // Handle the like action for a post
   const handleLikePost = (e: MouseEvent) => {
-    e.stopPropagation(); // Prevents the event from bubbling up the DOM tree
+    e.stopPropagation();
 
-    // Check if the post is already liked by the user, if yes then remove the like, else add the like
+    // Toggle the like status for the current user
     let newLikes = checkIsLiked(likes, userId) ? likes.filter((id: string) => id !== userId) : [...likes, userId];
-    setLikes(newLikes); // Update the likes state
-    likePost({ postId: post.$id, likesArray: newLikes }); // Call the likePost function with the new likes array
+    // Update state with the new likes array and trigger the likePost mutation
+    setLikes(newLikes);
+    likePost({ postId: post.$id, likesArray: newLikes });
   };
 
-  // Function to handle the save post event
+  // Handle the save action for a post
   const handleSavePost = (e: MouseEvent) => {
-    e.stopPropagation(); // Prevents the event from bubbling up the DOM tree
+    e.stopPropagation();
 
-    // Check if the post is already saved by the user
+    // Check if the post is already saved by the current user
     const savedPostRecord = currentUser?.save.find((record: Models.Document) => record.$id === post.$id);
 
+    // Toggle the saved status and trigger the appropriate mutation
     if (savedPostRecord) {
-      setIsSaved(false); // If the post is already saved, then unsave it
-      deleteSavedPost(savedPostRecord.$id); // Delete the saved post record
+      setIsSaved(false);
+      deleteSavedPost(savedPostRecord.$id);
     } else {
-      setIsSaved(true); // If the post is not saved, then save it
-      savePost({ postId: post.$id, userId }); // Save the post
+      setIsSaved(true);
+      savePost({ postId: post.$id, userId });
     }
   };
 
-  useEffect(() => {}, [likes]);
+  // Effect to be executed when the 'likes' state changes (if needed in the future)
+  useEffect(() => {
+    // Add any logic that should be executed when 'likes' changes
+    // For example, triggering additional actions or side effects
+  }, [likes]);
 
+  // Render the component UI
   return (
     <div className='flex justify-between items-center z-20'>
       <div className='flex gap-2 mr-5'>
+        {/* Like button with dynamic icon based on whether the user has liked the post */}
         <img
           src={`/assets/icons/like${checkIsLiked(likes, userId) ? 'd' : ''}.svg`}
           alt='like'
@@ -53,10 +64,12 @@ export default function PostStats({ post, userId }: { post: Models.Document; use
           onClick={handleLikePost}
           className='cursor-pointer'
         />
+        {/* Display the number of likes */}
         <p className='small-medium lg:base-medium'>{likes.length}</p>
       </div>
 
       <div className='flex gap-2'>
+        {/* Save button with dynamic icon based on whether the post is saved */}
         <img
           src={`/assets/icons/save${isSaved ? 'd' : ''}.svg`}
           alt='save'
