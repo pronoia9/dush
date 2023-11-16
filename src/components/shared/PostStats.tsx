@@ -37,7 +37,7 @@ export default function PostStats({ post, userId }: { post: Models.Document; use
       </div>
 
       <div className='flex gap-2'>
-        <img src={`/assets/icons/save.svg`} alt='save' width={20} height={20} onClick={() => {}} className='cursor-pointer' />
+        <img src={`/assets/icons/save${isSaved ? 'd' : ''}.svg`} alt='save' width={20} height={20} onClick={() => {}} className='cursor-pointer' />
       </div>
     </div>
   );
