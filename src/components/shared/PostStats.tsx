@@ -16,7 +16,13 @@ export default function PostStats({ post, userId }: { post: Models.Document; use
 
   const { user } = useUserContext();
 
-  const handleLikePost = () => {};
+  const handleLikePost = (e: MouseEvent) => {
+    e.stopPropagation();
+
+    let newLikes = checkIsLiked(likes, userId) ? likes.filter((id) => id !== userId) : [...likes, userId];
+    setLikes(newLikes);
+    likePost({ postId: post.$id, likesArray: newLikes });
+  };
 
   const handleSavePost = () => {};
 
