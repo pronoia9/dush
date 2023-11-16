@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from '@tanstack/react-query';
 
-import { createPost, createUserAccount, deleteSavedPost, getRecentPosts, likePost, savePost, signInAccount, signOutAccount } from '@/lib/appwrite';
+import { createPost, createUserAccount, deleteSavedPost, getCurrentUser, getRecentPosts, likePost, savePost, signInAccount, signOutAccount } from '@/lib/appwrite';
 import { QUERY_KEYS } from '@/lib/react-query';
 import { INewPost, INewUser } from '@/types';
 
@@ -77,5 +77,12 @@ export const useDeleteSavedPost = () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_POSTS] });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_CURRENT_USER] });
     },
+  });
+};
+
+export const useGetCurrentUser = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_CURRENT_USER],
+    queryFn: getCurrentUser,
   });
 };
