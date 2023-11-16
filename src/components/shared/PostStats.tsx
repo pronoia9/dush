@@ -11,9 +11,8 @@ export default function PostStats({ post, userId }: { post: Models.Document; use
 
   const { mutate: likePost } = useLikePost(),
     { mutate: savePost } = useSavePost(),
-    { mutate: deleteSavedPost } = useDeleteSavedPost();
-
-  const { data: currentUser } = useGetCurrentUser();
+    { mutate: deleteSavedPost } = useDeleteSavedPost(),
+    { data: currentUser } = useGetCurrentUser();
 
   const handleLikePost = (e: MouseEvent) => {
     e.stopPropagation();
