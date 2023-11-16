@@ -151,6 +151,19 @@ export async function updatePost(post: IUpdatePost) {
   }
 }
 
+export async function deletePost(postId: string, imageId: string) {
+  if (!postId || !imageId) throw Error('missing info');
+
+  try {
+    const statusCode = await databases.deleteDocument(appwriteConfig.databaseId, appwriteConfig.postsCollectionId, postId);
+    if (!statusCode) throw Error;
+    await deleteFile(imageId);
+    return statusCode;
+  } catch (error) {
+    console.log('error deleting post', error);
+  }
+}
+
 export async function uploadFile(file: File) {
   try {
     const uploadedFile = await storage.createFile(appwriteConfig.storageId, ID.unique(), file);
