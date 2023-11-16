@@ -6,7 +6,7 @@ import { Models } from 'appwrite';
 
 import { Button, FileUploader, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Loader, Textarea, toast } from '@/components';
 import { useUserContext } from '@/context';
-import { useCreatePost } from '@/lib/react-query';
+import { useCreatePost, useUpdatePost } from '@/lib/react-query';
 import { PostValidation } from '@/lib/validation';
 
 type PostFormProps = {
@@ -16,7 +16,8 @@ type PostFormProps = {
 
 export default function PostForm({ post, action }: PostFormProps) {
   const navigate = useNavigate();
-  const { mutateAsync: createPost, isLoading: isLoadingCreate } = useCreatePost();
+  const { mutateAsync: createPost, isLoading: isLoadingCreate } = useCreatePost(),
+    { mutateAsync: updatePost, isLoading: isLoadingUpdate } = useUpdatePost();
   const { user } = useUserContext();
 
   const preTitle = action === 'Create' ? 'Add' : 'Edit';
@@ -34,9 +35,16 @@ export default function PostForm({ post, action }: PostFormProps) {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof PostValidation>) {
-    const newPost = await createPost({ ...values, userId: user.id });
-    if (!newPost) toast({ title: 'Please try again.' });
-    else navigate('/');
+    if (post && action === 'Update') {
+      const updatedPost = await updatePost({ ...values, postId: post.id, imageId: post?.imageId, imageUrl: post?.imageUrl });
+      if (!updatedPost) toast({ title: 'Please try again.' });
+      else navigate(`/posts/${post.$id}`);
+    }
+    else if (action === 'Create') {
+      const newPost = await createPost({ ...values, userId: user.id });
+      if (!newPost) toast({ title: 'Please try again.' });
+      else navigate('/');
+    } else toast({ title: 'IDK WHAT WENT WRONG 😩' });
   }
 
   return (
