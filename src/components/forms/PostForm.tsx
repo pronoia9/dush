@@ -14,7 +14,7 @@ type PostFormProps = {
   action: 'Create' | 'Update';
 };
 
-export default function PostForm({ post }: PostFormProps) {
+export default function PostForm({ post, action }: PostFormProps) {
   const navigate = useNavigate();
   const { mutateAsync: createPost, isLoading: isLoadingCreate } = useCreatePost();
   const { user } = useUserContext();
