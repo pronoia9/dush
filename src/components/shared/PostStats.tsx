@@ -19,7 +19,7 @@ export default function PostStats({ post, userId }: { post: Models.Document; use
   const handleLikePost = (e: MouseEvent) => {
     e.stopPropagation();
 
-    let newLikes = checkIsLiked(likes, userId) ? likes.filter((id) => id !== userId) : [...likes, userId];
+    let newLikes = checkIsLiked(likes, userId) ? likes.filter((id: string) => id !== userId) : [...likes, userId];
     setLikes(newLikes);
     likePost({ postId: post.$id, likesArray: newLikes });
   };
