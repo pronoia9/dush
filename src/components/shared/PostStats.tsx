@@ -14,25 +14,29 @@ export default function PostStats({ post, userId }: { post: Models.Document; use
     { mutate: deleteSavedPost } = useDeleteSavedPost(),
     { data: currentUser } = useGetCurrentUser();
 
+  // Function to handle the like post event
   const handleLikePost = (e: MouseEvent) => {
-    e.stopPropagation();
+    e.stopPropagation(); // Prevents the event from bubbling up the DOM tree
 
+    // Check if the post is already liked by the user, if yes then remove the like, else add the like
     let newLikes = checkIsLiked(likes, userId) ? likes.filter((id: string) => id !== userId) : [...likes, userId];
-    setLikes(newLikes);
-    likePost({ postId: post.$id, likesArray: newLikes });
+    setLikes(newLikes); // Update the likes state
+    likePost({ postId: post.$id, likesArray: newLikes }); // Call the likePost function with the new likes array
   };
 
+  // Function to handle the save post event
   const handleSavePost = (e: MouseEvent) => {
-    e.stopPropagation();
+    e.stopPropagation(); // Prevents the event from bubbling up the DOM tree
 
+    // Check if the post is already saved by the user
     const savedPostRecord = currentUser?.save.find((record: Models.Document) => record.$id === post.$id);
 
     if (savedPostRecord) {
-      setIsSaved(false);
-      deleteSavedPost(savedPostRecord.$id);
+      setIsSaved(false); // If the post is already saved, then unsave it
+      deleteSavedPost(savedPostRecord.$id); // Delete the saved post record
     } else {
-      setIsSaved(true);
-      savePost({ postId: post.$id, userId });
+      setIsSaved(true); // If the post is not saved, then save it
+      savePost({ postId: post.$id, userId }); // Save the post
     }
   };
 
