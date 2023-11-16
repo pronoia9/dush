@@ -84,7 +84,8 @@ export async function createPost(post: INewPost) {
     }
 
     // Convert tags
-    const tags = post.tags?.replace(/ /g, '').split(',') || [];
+    const tagType = post.tags?.includes('#') ? '#' : ',';
+    const tags = post.tags?.replace(/ /g, '').replace(tagType === '#' ? ',' : '#', '').split(tagType) || [];
 
     // Save post to database
     const newPost = await databases.createDocument(appwriteConfig.databaseId, appwriteConfig.postsCollectionId, ID.unique(), {
