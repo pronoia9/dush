@@ -19,6 +19,8 @@ export default function PostForm({ post, action }: PostFormProps) {
   const { mutateAsync: createPost, isLoading: isLoadingCreate } = useCreatePost();
   const { user } = useUserContext();
 
+  const preTitle = action === 'Create' ? 'Add' : 'Edit';
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof PostValidation>>({
     resolver: zodResolver(PostValidation),
@@ -45,7 +47,7 @@ export default function PostForm({ post, action }: PostFormProps) {
           name='caption'
           render={({ field }) => (
             <FormItem>
-              <FormLabel className='shad-form_label'>Caption</FormLabel>
+              <FormLabel className='shad-form_label'>{preTitle} Caption</FormLabel>
               <FormControl>
                 <Textarea className='shad-textarea custom-scrollbar' {...field} />
               </FormControl>
@@ -59,7 +61,7 @@ export default function PostForm({ post, action }: PostFormProps) {
           name='file'
           render={({ field }) => (
             <FormItem>
-              <FormLabel className='shad-form_label'>Add Photos</FormLabel>
+              <FormLabel className='shad-form_label'>{preTitle} Photos</FormLabel>
               <FormControl>
                 <FileUploader fieldChange={field.onChange} mediaUrl={post?.imageUrl} />
               </FormControl>
@@ -73,7 +75,7 @@ export default function PostForm({ post, action }: PostFormProps) {
           name='location'
           render={({ field }) => (
             <FormItem>
-              <FormLabel className='shad-form_label'>Add Location</FormLabel>
+              <FormLabel className='shad-form_label'>{preTitle} Location</FormLabel>
               <FormControl>
                 <Input type='text' className='shad-input' {...field} />
               </FormControl>
@@ -87,7 +89,7 @@ export default function PostForm({ post, action }: PostFormProps) {
           name='tags'
           render={({ field }) => (
             <FormItem>
-              <FormLabel className='shad-form_label'>Add Tags (separated by comma " , ")</FormLabel>
+              <FormLabel className='shad-form_label'>{preTitle} Tags (separated by comma " , ")</FormLabel>
               <FormControl>
                 <Input type='text' className='shad-input' placeholder='Art, Expression, Learning, Humor' {...field} />
               </FormControl>
