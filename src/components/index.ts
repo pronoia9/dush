@@ -20,13 +20,15 @@ import UpdateProfile from '@/_root/pages/UpdateProfile';
 // FORMS
 import PostForm from '@/components/forms/PostForm';
 // SHARED
-import Loader from '@/components/shared/Loader';
 import Bottombar from '@/components/shared/Bottombar';
-import LeftSidebar from '@/components/shared/LeftSidebar';
-import Topbar from '@/components/shared/Topbar';
 import FileUploader from '@/components/shared/FileUploader';
+import GridPostList from '@/components/shared/GridPostList';
+import LeftSidebar from '@/components/shared/LeftSidebar';
+import Loader from '@/components/shared/Loader';
 import PostCard from '@/components/shared/PostCard';
 import PostStats from '@/components/shared/PostStats';
+import SearchResults from '@/components/shared/SearchResults';
+import Topbar from '@/components/shared/Topbar';
 // UI
 import { Button, buttonVariants } from '@/components/ui/button';
 import { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField } from '@/components/ui/form';
@@ -54,8 +56,8 @@ export {
   Loader,
   Bottombar, LeftSidebar, Topbar,
   FileUploader,
-  PostCard,
-  PostStats,
+  PostCard, PostStats,
+  GridPostList, SearchResults,
   // UI
   Button, buttonVariants,
   useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField,
