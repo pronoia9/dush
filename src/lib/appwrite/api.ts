@@ -181,16 +181,16 @@ export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
 }
 
 // ============================== GET POST BY ID
-export async function getPostById(postId: string) {
+export async function getPostById(postId?: string) {
+  if (!postId) throw Error;
   try {
-    const posts = await databases.getDocument(appwriteConfig.databaseId, appwriteConfig.postsCollectionId, postId);
-    if (!posts) throw Error;
-    return posts;
+    const post = await databases.getDocument(appwriteConfig.databaseId, appwriteConfig.postsCollectionId, postId);
+    if (!post) throw Error;
+    return post;
   } catch (error) {
-    console.log('error getting posts by id', error);
+    console.log('error getting post by id', error);
   }
 }
-
 // ============================== GET USER'S POST
 
 // ============================== GET POPULAR POSTS (BY HIGHEST LIKE COUNT)
