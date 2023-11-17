@@ -17,13 +17,15 @@ export default function PostCard({ post }: { post: Models.Document }) {
             <img src={post.creator?.imageUrl || '/assets/icons/profile-placeholder.svg'} alt='creator' className='rounded-full w-12 lg:h-12' />
           </Link>
 
-          <div className='flex flex-col'>
-            <p className='base-medium lg:body-bold text-light-1'>{post.creator.name}</p>
-            <div className='flex-center gap-2 text-light-3'>
-              <p className='subtle-semibold lg:small-regular'>{multiFormatDateString(post.$createdAt)}</p> -{' '}
-              <p className='subtle-semibold lg:small-regular'>{post.location}</p>
+          <Link to={`/posts/${post.$id}`}>
+            <div className='flex flex-col'>
+              <p className='base-medium lg:body-bold text-light-1'>{post.creator.name}</p>
+              <div className='flex-center gap-2 text-light-3'>
+                <p className='subtle-semibold lg:small-regular'>{multiFormatDateString(post.$createdAt)}</p> -{' '}
+                <p className='subtle-semibold lg:small-regular'>{post.location}</p>
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
 
         {user.id === post.creator.$id && (
@@ -44,7 +46,7 @@ export default function PostCard({ post }: { post: Models.Document }) {
             ))}
           </ul>
         </div>
-
+        {/* // TODO: Fancybox maybe? */}
         <img src={post.imageUrl || '/assets/icons/profile-placeholder.svg'} className='post-card_img' alt='post image' />
       </Link>
 
