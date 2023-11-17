@@ -97,22 +97,22 @@ export async function signOutAccount() {
 // ============================== CREATE POST
 export async function createPost(post: INewPost) {
   try {
-    // Upload image to storage
+    // Upload file to appwrite storage
     const uploadedFile = await uploadFile(post.file[0]);
     if (!uploadedFile) throw Error;
 
     // Get file url
     const fileUrl = getFilePreview(uploadedFile.$id);
     if (!fileUrl) {
-      deleteFile(uploadedFile.$id);
+      await deleteFile(uploadedFile.$id);
       throw Error;
     }
 
-    // Convert tags
+    // Convert tags into array
     const tagType = post.tags?.includes('#') ? '#' : ',';
     const tags = post.tags?.replace(/ /g, '').split(tagType) || [];
 
-    // Save post to database
+    // Create post
     const newPost = await databases.createDocument(appwriteConfig.databaseId, appwriteConfig.postsCollectionId, ID.unique(), {
       creator: post.userId,
       caption: post.caption,
@@ -122,7 +122,7 @@ export async function createPost(post: INewPost) {
       tags,
     });
     if (!newPost) {
-      deleteFile(uploadedFile.$id);
+      await deleteFile(uploadedFile.$id);
       throw Error;
     }
 
