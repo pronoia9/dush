@@ -262,14 +262,14 @@ export async function updatePost(post: IUpdatePost) {
 }
 
 // ============================== DELETE POST
-export async function deletePost(postId: string, imageId: string) {
-  if (!postId || !imageId) throw Error('missing info');
+export async function deletePost(postId?: string, imageId?: string) {
+  if (!postId || !imageId) return;
 
   try {
     const statusCode = await databases.deleteDocument(appwriteConfig.databaseId, appwriteConfig.postsCollectionId, postId);
     if (!statusCode) throw Error;
     await deleteFile(imageId);
-    return statusCode;
+    return { status: 'Ok' };
   } catch (error) {
     console.log('error deleting post', error);
   }
