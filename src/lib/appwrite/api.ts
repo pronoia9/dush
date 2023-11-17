@@ -164,7 +164,18 @@ export async function deleteFile(fileId: string) {
 }
 
 // TODO ============================== GET POSTS
-export async function searchPosts(searchTerm: string) {}
+export async function searchPosts(searchTerm: string) {
+  try {
+    const posts = await databases.listDocuments(appwriteConfig.databaseId, appwriteConfig.postsCollectionId, [
+      Query.search('caption', searchTerm),
+      //! Query.search('tags', searchTerm),
+    ]);
+    if (!posts) throw Error;
+    return posts;
+  } catch (error) {
+    console.log('error searching posts', error);
+  }
+}
 
 export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
   const queries: any[] = [Query.orderDesc('$updatedAt'), Query.limit(9)];
