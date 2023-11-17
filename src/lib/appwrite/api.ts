@@ -191,7 +191,9 @@ export async function getPostById(postId?: string) {
     console.log('error getting post by id', error);
   }
 }
-// ============================== GET USER'S POST
+
+// TODO ============================== GET USER'S POST
+export async function getUserPosts(userId?: string) {}
 
 // ============================== GET POPULAR POSTS (BY HIGHEST LIKE COUNT)
 export async function getRecentPosts() {
