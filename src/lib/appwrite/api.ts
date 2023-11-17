@@ -163,7 +163,7 @@ export async function deleteFile(fileId: string) {
   }
 }
 
-// ============================== GET POSTS
+// TODO ============================== GET POSTS
 export async function searchPosts(searchTerm: string) {}
 
 export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
