@@ -4,7 +4,7 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Models } from 'appwrite';
 
-import { Button, FileUploader, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Loader, Textarea, toast } from '@/components';
+import { Button, FileUploader, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Textarea, toast } from '@/components';
 import { useUserContext } from '@/context';
 import { useCreatePost, useUpdatePost } from '@/lib/react-query';
 import { PostValidation } from '@/lib/validation';
@@ -113,7 +113,8 @@ export default function PostForm({ post, action }: PostFormProps) {
             Cancel
           </Button>
           <Button type='submit' className='shad-button_primary whitespace-nowrap'>
-            {isLoadingCreate || isLoadingUpdate ? <Loader /> : action === 'Create' ? 'Submit' : 'Update'}
+            {/* {isLoadingCreate || isLoadingUpdate ? <Loader /> : action === 'Create' ? 'Submit' : 'Update'} */}
+            {isLoadingCreate ? 'Submitting' : isLoadingCreate ? 'Updating' : 'Submit'}
           </Button>
         </div>
       </form>
