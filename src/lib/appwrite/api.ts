@@ -197,17 +197,16 @@ export async function getUserPosts(userId?: string) {}
 
 // ============================== GET POPULAR POSTS (BY HIGHEST LIKE COUNT)
 export async function getRecentPosts() {
-  const posts = await databases.listDocuments(appwriteConfig.databaseId, appwriteConfig.postsCollectionId, [
-    Query.orderDesc('$createdAt'),
-    Query.limit(20),
-  ]);
-  if (!posts) throw Error;
-  return posts;
-  // try {
-  // } catch (error) {
-  //   console.log('error getting recent posts', error);
-  // }
-  // return [];
+  try {
+    const posts = await databases.listDocuments(appwriteConfig.databaseId, appwriteConfig.postsCollectionId, [
+      Query.orderDesc('$createdAt'),
+      Query.limit(20),
+    ]);
+    if (!posts) throw Error;
+    return posts;
+  } catch (error) {
+    console.log('error getting recent posts', error);
+  }
 }
 
 // ============================== UPDATE POST
