@@ -305,7 +305,7 @@ export async function deleteSavedPost(savedRecordId: string) {
   try {
     const statusCode = await databases.deleteDocument(appwriteConfig.databaseId, appwriteConfig.savesCollectionId, savedRecordId);
     if (!statusCode) throw Error;
-    return statusCode;
+    return { status: 'Ok' };
   } catch (error) {
     console.log('error deleting saved post', error);
   }
