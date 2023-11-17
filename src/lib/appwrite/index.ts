@@ -1,7 +1,65 @@
+// index.ts
 import { appwriteConfig, client, account, databases, storage, avatars } from '@/lib/appwrite/config';
-import { createUserAccount, signInAccount, getCurrentUser, signOutAccount, createPost, getRecentPosts, likePost, savePost, deleteSavedPost, getPostById, updatePost, deletePost, } from '@/lib/appwrite/api';
+import {
+  // Authentication functions
+  createUserAccount,
+  saveUserToDB,
+  signInAccount,
+  getAccount,
+  getCurrentUser,
+  signOutAccount,
+  // Post-related functions
+  createPost,
+  uploadFile,
+  getFilePreview,
+  deleteFile,
+  searchPosts,
+  getInfinitePosts,
+  getPostById,
+  getUserPosts,
+  getRecentPosts,
+  updatePost,
+  deletePost,
+  likePost,
+  savePost,
+  deleteSavedPost,
+  // User-related functions
+  getUsers,
+  getUserById,
+  updateUser,
+} from '@/lib/appwrite/api';
 
 export {
-  appwriteConfig, client, account, databases, storage, avatars,
-  createUserAccount, signInAccount, getCurrentUser, signOutAccount, createPost, getRecentPosts, likePost, savePost, deleteSavedPost, getPostById, updatePost, deletePost,
+  appwriteConfig,
+  client,
+  account,
+  databases,
+  storage,
+  avatars,
+  // Authentication functions
+  createUserAccount,
+  saveUserToDB,
+  signInAccount,
+  getAccount,
+  getCurrentUser,
+  signOutAccount,
+  // Post-related functions
+  createPost,
+  uploadFile,
+  getFilePreview,
+  deleteFile,
+  searchPosts,
+  getInfinitePosts,
+  getPostById,
+  getUserPosts,
+  getRecentPosts,
+  updatePost,
+  deletePost,
+  likePost,
+  savePost,
+  deleteSavedPost,
+  // User-related functions
+  getUsers,
+  getUserById,
+  updateUser,
 };
