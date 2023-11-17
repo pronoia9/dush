@@ -311,3 +311,15 @@ export async function deleteSavedPost(savedRecordId: string) {
   }
 }
 
+// ============================================================
+// USER
+// ============================================================
+
+// TODO ============================== GET USERS
+export async function getUsers(limit?: number) {}
+
+// TODO ============================== GET USER BY ID
+export async function getUserById(userId: string) {}
+
+// TODO ============================== UPDATE USER
+export async function updateUser(user: IUpdateUser) {}
