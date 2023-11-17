@@ -71,8 +71,7 @@ export const useCreatePost = () => {
 
 // C(Read)UD
 // TODO
-export const useGetPosts = () => {
-};
+export const useGetPosts = () => {};
 
 export const useGetPostById = (postId?: string) => {
   return useQuery({
@@ -90,8 +89,7 @@ export const useGetRecentPosts = () => {
 };
 
 // TODO
-export const useSearchPosts = (searchTerm: string) => {
-};
+export const useSearchPosts = (searchTerm: string) => {};
 
 export const useLikePost = () => {
   const queryClient = useQueryClient();
@@ -166,11 +164,8 @@ export const useGetCurrentUser = () => {
   });
 };
 
-export const useGetUsers = (limit?: number) => {
-};
+export const useGetUsers = (limit?: number) => {};
 
-export const useGetUserById = (userId: string) => {
-};
+export const useGetUserById = (userId: string) => {};
 
-export const useUpdateUser = () => {
-};
+export const useUpdateUser = () => {};
