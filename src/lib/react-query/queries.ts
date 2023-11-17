@@ -70,6 +70,9 @@ export const useCreatePost = () => {
 };
 
 // C(Read)UD
+// TODO
+export const useGetPosts = () => {
+};
 
 export const useGetPostById = (postId: string) => {
   return useQuery({
@@ -84,6 +87,10 @@ export const useGetRecentPosts = () => {
     queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
     queryFn: getRecentPosts,
   });
+};
+
+// TODO
+export const useSearchPosts = (searchTerm: string) => {
 };
 
 export const useLikePost = () => {
