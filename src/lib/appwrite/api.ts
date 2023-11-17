@@ -65,7 +65,7 @@ export async function getAccount() {
 // ============================== GET USER
 export async function getCurrentUser() {
   try {
-    const currentAccount = await account.get();
+    const currentAccount = await getAccount();
     if (!currentAccount) throw Error;
 
     const currentUser = await databases.listDocuments(appwriteConfig.databaseId, appwriteConfig.usersCollectionId, [
@@ -76,6 +76,7 @@ export async function getCurrentUser() {
     return currentUser.documents[0];
   } catch (error) {
     console.log('error getting current user', error);
+    return null;
   }
 }
 
