@@ -89,6 +89,9 @@ export const useGetRecentPosts = () => {
 };
 
 // TODO
+export const useGetUserPosts = (userId?: string) => {};
+
+// TODO
 export const useSearchPosts = (searchTerm: string) => {};
 
 export const useLikePost = () => {
@@ -164,8 +167,11 @@ export const useGetCurrentUser = () => {
   });
 };
 
+// TODO
 export const useGetUsers = (limit?: number) => {};
 
+// TODO
 export const useGetUserById = (userId: string) => {};
 
+// TODO
 export const useUpdateUser = () => {};
