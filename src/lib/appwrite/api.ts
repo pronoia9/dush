@@ -231,11 +231,11 @@ export async function updatePost(post: IUpdatePost) {
       image = { ...image, imageUrl: fileUrl, imageId: uploadedFile.$id };
     }
 
-    // Convert tags
+    // Convert tags into array
     const tagType = post.tags?.includes('#') ? '#' : ',';
     const tags = post.tags?.replace(/ /g, '').split(tagType) || [];
 
-    // Update post in the database
+    //  Update post
     const updatedPost = await databases.updateDocument(appwriteConfig.databaseId, appwriteConfig.postsCollectionId, post.postId, {
       caption: post.caption,
       imageUrl: image.imageUrl,
@@ -248,6 +248,7 @@ export async function updatePost(post: IUpdatePost) {
     if (!updatedPost) {
       // Delete new file that has been recently uploaded
       if (hasFileToUpdate) await deleteFile(image.imageId);
+      // If no new file uploaded, just throw error
       throw Error;
     }
 
