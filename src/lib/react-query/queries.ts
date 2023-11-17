@@ -1,21 +1,39 @@
 import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from '@tanstack/react-query';
 
 import {
-  createPost,
+  // Authentication functions
   createUserAccount,
-  deletePost,
-  deleteSavedPost,
+  saveUserToDB,
+  signInAccount,
+  getAccount,
   getCurrentUser,
+  signOutAccount,
+  // Post-related functions
+  createPost,
+  uploadFile,
+  getFilePreview,
+  deleteFile,
+  searchPosts,
+  getInfinitePosts,
   getPostById,
+  getUserPosts,
   getRecentPosts,
+  updatePost,
+  deletePost,
   likePost,
   savePost,
-  signInAccount,
-  signOutAccount,
-  updatePost,
+  deleteSavedPost,
+  // User-related functions
+  getUsers,
+  getUserById,
+  updateUser,
 } from '@/lib/appwrite';
 import { QUERY_KEYS } from '@/lib/react-query';
-import { INewPost, INewUser, IUpdatePost } from '@/types';
+import { INewPost, INewUser, IUpdatePost, IUpdateUser } from '@/types';
+
+// ============================================================
+// AUTH QUERIES
+// ============================================================
 
 export const useCreateUserAccount = () => {
   return useMutation({
@@ -35,6 +53,11 @@ export const useSignOutAccount = () => {
   });
 };
 
+// ============================================================
+// POST QUERIES
+// ============================================================
+
+// (Create)RUD
 export const useCreatePost = () => {
   const queryClient = useQueryClient();
 
@@ -43,6 +66,16 @@ export const useCreatePost = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_RECENT_POSTS] });
     },
+  });
+};
+
+// C(Read)UD
+
+export const useGetPostById = (postId: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_POST_BY_ID, postId],
+    queryFn: () => getPostById(postId),
+    enabled: !!postId,
   });
 };
 
@@ -93,21 +126,7 @@ export const useDeleteSavedPost = () => {
   });
 };
 
-export const useGetCurrentUser = () => {
-  return useQuery({
-    queryKey: [QUERY_KEYS.GET_CURRENT_USER],
-    queryFn: getCurrentUser,
-  });
-};
-
-export const useGetPostById = (postId: string) => {
-  return useQuery({
-    queryKey: [QUERY_KEYS.GET_POST_BY_ID, postId],
-    queryFn: () => getPostById(postId),
-    enabled: !!postId,
-  });
-};
-
+// CR(Update)D
 export const useUpdatePost = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -118,6 +137,7 @@ export const useUpdatePost = () => {
   });
 };
 
+// CRU(Delete)
 export const useDeletePost = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -125,5 +145,16 @@ export const useDeletePost = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_RECENT_POSTS] });
     },
+  });
+};
+
+// ============================================================
+// USER QUERIES
+// ============================================================
+
+export const useGetCurrentUser = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_CURRENT_USER],
+    queryFn: getCurrentUser,
   });
 };
