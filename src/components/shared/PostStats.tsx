@@ -1,9 +1,9 @@
 import { MouseEvent, useEffect, useState } from 'react';
 import { Models } from 'appwrite';
 
+import { Loader } from '@/components';
 import { useDeleteSavedPost, useGetCurrentUser, useLikePost, useSavePost } from '@/lib/react-query';
 import { checkIsLiked } from '@/lib/utils';
-import { Loader } from '..';
 
 export default function PostStats({ post, userId }: { post: Models.Document; userId: string }) {
   // Extract the list of user IDs who liked the post from the post object
