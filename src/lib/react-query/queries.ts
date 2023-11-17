@@ -165,3 +165,12 @@ export const useGetCurrentUser = () => {
     queryFn: getCurrentUser,
   });
 };
+
+export const useGetUsers = (limit?: number) => {
+};
+
+export const useGetUserById = (userId: string) => {
+};
+
+export const useUpdateUser = () => {
+};
