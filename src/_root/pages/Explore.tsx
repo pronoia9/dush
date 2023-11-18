@@ -8,7 +8,7 @@ export default function Explore() {
   const [searchValue, setSearchValue] = useState('');
   const debouncedValue = useDebounce(searchValue, 500);
   const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();
-  const { data: searchedPost, isLoading: isSearching } = useSearchPosts(debouncedValue);
+  const { data: searchedPost, isLoading: isSearchFetching } = useSearchPosts(debouncedValue);
 
   if (!posts) return <div className='flex-center w-full h-full'><Loader /></div>;
 
@@ -36,7 +36,7 @@ export default function Explore() {
 
       <div className='flex flex-wrap gap-9 w-full max-w-5xl'>
         {shouldShowSearchResults ? (
-          <SearchResults />
+          <SearchResults searchedPosts={searchedPost} isSearchFetching={isSearchFetching} />
         ) : shouldShowPosts ? (
           <p className='text-light-4 mt-10 text-center w-full'>End of posts</p>
         ) : (
