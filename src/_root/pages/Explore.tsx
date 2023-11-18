@@ -1,19 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 import { GridPostList, Input, Loader, SearchResults } from '@/components';
 import useDebounce from '@/hooks/useDebounce';
 import { useGetPosts, useSearchPosts } from '@/lib/react-query';
 
 export default function Explore() {
+  const { ref, inView, entry } = useInView({ threshold: 0 });
   const [searchValue, setSearchValue] = useState('');
   const debouncedValue = useDebounce(searchValue, 500);
   const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();
   const { data: searchedPosts, isLoading: isSearchFetching } = useSearchPosts(debouncedValue);
 
-  if (!posts) return <div className='flex-center w-full h-full'><Loader /></div>;
+  useEffect(() => {
+    if (inView && !searchValue) fetchNextPage();
+  }, [inView, searchValue]);
 
-  const shouldShowSearchResults = searchValue !== ''; //! TEMP
-  const shouldShowPosts = !shouldShowSearchResults && posts?.pages?.every((item: any) => item?.documents.length === 0); //! TEMP
+  if (!posts)
+    return (
+      <div className='flex-center w-full h-full'>
+        <Loader />
+      </div>
+    );
+
+  const shouldShowSearchResults = searchValue !== '';
+  const shouldShowPosts = !shouldShowSearchResults && posts?.pages?.every((item: any) => item?.documents.length === 0);
 
   return (
     <div className='explore-container'>
@@ -43,6 +54,12 @@ export default function Explore() {
           posts?.pages.map((item, index) => <GridPostList key={`explore-page-${index}`} posts={item.documents} />)
         )}
       </div>
+
+      {hasNextPage && !searchValue && (
+        <div ref={ref} className='mt-10'>
+          <Loader />
+        </div>
+      )}
     </div>
   );
 }
