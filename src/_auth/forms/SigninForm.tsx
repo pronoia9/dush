@@ -12,7 +12,7 @@ export default function SigninForm() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
-  const { mutateAsync: signInAccount } = useSignInAccount();
+  const { mutateAsync: signInAccount, isLoading } = useSignInAccount();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof SigninValidation>>({
@@ -21,18 +21,24 @@ export default function SigninForm() {
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof SigninValidation>) {    
-    const session = await signInAccount({ email: values.email, password: values.password });
-    if (!session) return toast({ title: 'Sign in failed. Please try again.' });
+  async function onSubmit(user: z.infer<typeof SigninValidation>) {
+    const session = await signInAccount(user);
+    if (!session) {
+      toast({ title: 'Sign in failed. Please try again.' });
+      return;
+    }
 
     const isLoggedIn = await checkAuthUser();
     if (isLoggedIn) form.reset(), navigate('/');
-    else toast({ title: 'Sign up failed. Please try again.' });
+    else {
+      toast({ title: 'Sign up failed. Please try again.' });
+      return;
+    }
   }
 
   return (
     <Form {...form}>
-      <div className='sm:w-420 flex flex-center flex-col'>
+      <div className='sm:w-420 flex-center flex-col'>
         <img src='/assets/images/logo.svg' alt='logo' />
         <h2 className='h3-bold md:h2-bold pt-5 sm:pt-12'>Log in to your account</h2>
         <p className='text-light-3 small-medium md:base-regular mt-2'>Welcome back! Please enter your details</p>
@@ -43,10 +49,10 @@ export default function SigninForm() {
             name='email'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
                 <FormMessage />
+                <FormLabel className='shad-form_label'>Email</FormLabel>
                 <FormControl>
-                  <Input type='email' className='shad-input' placeholder='spearmint-rhino@mindmelder.com' {...field} />
+                  <Input type='text' className='shad-input' {...field} />
                 </FormControl>
               </FormItem>
             )}
@@ -57,8 +63,8 @@ export default function SigninForm() {
             name='password'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
                 <FormMessage />
+                <FormLabel className='shad-form_label'>Password</FormLabel>
                 <FormControl>
                   <Input type='password' className='shad-input' {...field} />
                 </FormControl>
@@ -66,13 +72,19 @@ export default function SigninForm() {
             )}
           />
 
-          <Button type='submit' className='shad-button_primary mt-5'>
-            {!isUserLoading ? 'Sign In' : <Loader />}
+          <Button type='submit' className='shad-button_primary'>
+            {isLoading || isUserLoading ? (
+              <div className='flex-center gap-2'>
+                <Loader /> Loading...
+              </div>
+            ) : (
+              'Log in'
+            )}
           </Button>
 
           <p className='text-small-regular text-light-2 text-center mt-2'>
-            Don't have an accout?{' '}
-            <Link to='/sign-up' className='text-primary-500 text-small-semibold'>
+            Don&apos;t have an account?{' '}
+            <Link to='/sign-up' className='text-primary-500 text-small-semibold ml-1'>
               Sign up
             </Link>
           </p>
