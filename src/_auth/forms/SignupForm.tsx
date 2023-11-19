@@ -13,7 +13,7 @@ export default function SignupForm() {
   const { toast } = useToast();
   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
   const { mutateAsync: createUserAccount, isLoading: isCreatingUser } = useCreateUserAccount();
-  const { mutateAsync: signInAccount, isLoading: isSigningIn } = useSignInAccount();
+  const { mutateAsync: signInAccount, isLoading: isSigningInUser } = useSignInAccount();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof SignupValidation>>({
@@ -22,21 +22,35 @@ export default function SignupForm() {
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof SignupValidation>) {
-    const newUser = await createUserAccount(values);
-    if (!newUser) return toast({ title: 'Sign up failed. Please try again.' });
+  async function onSubmit(user: z.infer<typeof SignupValidation>) {
+    try {
+      const newUser = await createUserAccount(user);
+      if (!newUser) {
+        toast({ title: 'Sign up failed. Please try again.' });
+        return;
+      }
 
-    const session = await signInAccount({ email: values.email, password: values.password });
-    if (!session) return toast({ title: 'Sign in failed. Please try again.' });
+      const session = await signInAccount({ email: user.email, password: user.password });
+      if (!session) {
+        toast({ title: 'Something went wrong. Please login your new account' });
+        navigate('/sign-in');
+        return;
+      }
 
-    const isLoggedIn = await checkAuthUser();
-    if (isLoggedIn) form.reset(), navigate('/');
-    else toast({ title: 'Sign up failed. Please try again.' });
+      const isLoggedIn = await checkAuthUser();
+      if (isLoggedIn) form.reset(), navigate('/');
+      else {
+        toast({ title: 'Login failed. Please try again.' });
+        return;
+      }
+    } catch (error) {
+      console.log({ error });
+    }
   }
 
   return (
     <Form {...form}>
-      <div className='sm:w-420 flex flex-center flex-col'>
+      <div className='sm:w-420 flex-center flex-col'>
         <img src='/assets/images/logo.svg' alt='logo' />
         <h2 className='h3-bold md:h2-bold pt-5 sm:pt-12'>Create a new account</h2>
         <p className='text-light-3 small-medium md:base-regular mt-2'>To use DÜSH, please enter your account details</p>
@@ -47,10 +61,10 @@ export default function SignupForm() {
             name='name'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
                 <FormMessage />
+                <FormLabel className='shad-form_label'>Name</FormLabel>
                 <FormControl>
-                  <Input type='text' className='shad-input' placeholder='Dr. Penguin' {...field} />
+                  <Input type='text' className='shad-input' {...field} />
                 </FormControl>
               </FormItem>
             )}
@@ -61,10 +75,10 @@ export default function SignupForm() {
             name='username'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
                 <FormMessage />
+                <FormLabel className='shad-form_label'>Username</FormLabel>
                 <FormControl>
-                  <Input type='text' className='shad-input' placeholder='SpaceCowboy69' {...field} />
+                  <Input type='text' className='shad-input' {...field} />
                 </FormControl>
               </FormItem>
             )}
@@ -75,10 +89,10 @@ export default function SignupForm() {
             name='email'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
                 <FormMessage />
+                <FormLabel className='shad-form_label'>Email</FormLabel>
                 <FormControl>
-                  <Input type='email' className='shad-input' placeholder='spearmint-rhino@mindmelder.com' {...field} />
+                  <Input type='text' className='shad-input' {...field} />
                 </FormControl>
               </FormItem>
             )}
@@ -89,8 +103,8 @@ export default function SignupForm() {
             name='password'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
                 <FormMessage />
+                <FormLabel className='shad-form_label'>Password</FormLabel>
                 <FormControl>
                   <Input type='password' className='shad-input' {...field} />
                 </FormControl>
@@ -98,13 +112,19 @@ export default function SignupForm() {
             )}
           />
 
-          <Button type='submit' className='shad-button_primary mt-5'>
-            {!isCreatingUser ? 'Submit' : <Loader />}
+          <Button type='submit' className='shad-button_primary'>
+            {isCreatingUser || isSigningInUser || isUserLoading ? (
+              <div className='flex-center gap-2'>
+                <Loader /> Loading...
+              </div>
+            ) : (
+              'Sign Up'
+            )}
           </Button>
 
           <p className='text-small-regular text-light-2 text-center mt-2'>
-            Already have an accout?{' '}
-            <Link to='/sign-in' className='text-primary-500 text-small-semibold'>
+            Already have an account?{' '}
+            <Link to='/sign-in' className='text-primary-500 text-small-semibold ml-1'>
               Log in
             </Link>
           </p>
