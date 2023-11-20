@@ -42,9 +42,18 @@ export default function Explore() {
       <div className='explore-inner_container'>
         <h2 className='h3-bold md:h2-bold w-full'>Search Posts</h2>
 
-        <div className='flex gap-2 px-4 w-full rounded-lg bg-dark-4'>
-          <img src='/public/assets/icons/search.svg' alt='search' width={24} height={24} />
-          <Input type='text' placeholder='Search' className='explore-search' value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
+        <div className='flex gap-1 px-4 w-full rounded-lg bg-dark-4'>
+          <img src='/assets/icons/search.svg' alt='search' width={24} height={24} />
+          <Input
+            type='text'
+            placeholder='Search'
+            className='explore-search'
+            value={searchValue}
+            onChange={(e) => {
+              const { value } = e.target;
+              setSearchValue(value);
+            }}
+          />
         </div>
       </div>
 
@@ -58,11 +67,11 @@ export default function Explore() {
 
       <div className='flex flex-wrap gap-9 w-full max-w-5xl'>
         {shouldShowSearchResults ? (
-          <SearchResults searchedPosts={searchedPosts} isSearchFetching={isSearchFetching} />
+          <SearchResults isSearchFetching={isSearchFetching} searchedPosts={searchedPosts} />
         ) : shouldShowPosts ? (
           <p className='text-light-4 mt-10 text-center w-full'>End of posts</p>
         ) : (
-          posts?.pages.map((item, index) => <GridPostList key={`explore-page-${index}`} posts={item.documents} />)
+          posts.pages.map((item, index) => <GridPostList key={`explore-page-${index}`} posts={item.documents} />)
         )}
       </div>
 
