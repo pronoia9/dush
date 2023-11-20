@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { GridPostList, Input, Loader, SearchResults } from '@/components';
+import { GridPostList, Input, Loader } from '@/components';
 import useDebounce from '@/hooks/useDebounce';
 import { useGetPosts, useSearchPosts } from '@/lib/react-query';
 
