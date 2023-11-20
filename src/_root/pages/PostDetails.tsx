@@ -1,11 +1,12 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
-import { Button, Loader, PostStats } from '@/components';
+import { Button, GridPostList, Loader, PostStats } from '@/components';
 import { useUserContext } from '@/context';
-import { useGetPostById } from '@/lib/react-query';
+import { useGetPostById, useGetUserPosts, useDeletePost } from '@/lib/react-query';
 import { multiFormatDateString } from '@/lib/utils';
 
 export default function PostDetails() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { user } = useUserContext();
   const { data: post, isLoading } = useGetPostById(id || '');
