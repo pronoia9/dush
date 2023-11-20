@@ -4,7 +4,7 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Models } from 'appwrite';
 
-import { Button, FileUploader, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Textarea, toast } from '@/components';
+import { Button, FileUploader, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Loader, Input, Textarea, useToast } from '@/components';
 import { useUserContext } from '@/context';
 import { useCreatePost, useUpdatePost } from '@/lib/react-query';
 import { PostValidation } from '@/lib/validation';
@@ -16,11 +16,10 @@ type PostFormProps = {
 
 export default function PostForm({ post, action }: PostFormProps) {
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const { user } = useUserContext();
   const { mutateAsync: createPost, isLoading: isLoadingCreate } = useCreatePost(),
     { mutateAsync: updatePost, isLoading: isLoadingUpdate } = useUpdatePost();
-  const { user } = useUserContext();
-
-  const preTitle = action === 'Create' ? 'Add' : 'Edit';
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof PostValidation>>({
@@ -28,8 +27,8 @@ export default function PostForm({ post, action }: PostFormProps) {
     defaultValues: {
       caption: post ? post?.caption : '',
       file: [],
-      location: post ? post?.location : '',
-      tags: post ? post.tags.join(', ') : '',
+      location: post ? post.location : '',
+      tags: post ? post.tags.join(',') : '',
     },
   });
 
@@ -38,14 +37,15 @@ export default function PostForm({ post, action }: PostFormProps) {
     if (post && action === 'Update') {
       const updatedPost = await updatePost({ ...values, postId: post.$id, imageId: post?.imageId, imageUrl: post?.imageUrl });
       if (!updatedPost) toast({ title: 'Please try again.' });
-      else navigate(`/posts/${post.$id}`);
-    }
-    else if (action === 'Create') {
+      navigate(`/posts/${post.$id}`);
+    } else if (action === 'Create') {
       const newPost = await createPost({ ...values, userId: user.id });
       if (!newPost) toast({ title: 'Please try again.' });
-      else navigate('/');
+      navigate('/');
     } else toast({ title: 'IDK WHAT WENT WRONG 😩' });
   }
+
+  const preTitle = action === 'Create' ? 'Add' : 'Edit';
 
   return (
     <Form {...form}>
@@ -101,7 +101,7 @@ export default function PostForm({ post, action }: PostFormProps) {
                 {preTitle} Tags <em>(separated by comma "art, music" or hashtag "#art #music")</em>
               </FormLabel>
               <FormControl>
-                <Input type='text' className='shad-input' placeholder='Art, Expression, Learning, Humor' {...field} />
+                <Input type='text' className='shad-input' placeholder='Art, Nature, Humor' {...field} />
               </FormControl>
               <FormMessage className='shad-form_message' />
             </FormItem>
@@ -109,12 +109,12 @@ export default function PostForm({ post, action }: PostFormProps) {
         />
 
         <div className='flex gap-4 items-center justify-end'>
-          <Button type='button' className='shad-button_dark_4' style={{ maxHeight: '2.5rem' }}>
+          <Button type='button' className='shad-button_dark_4' style={{ maxHeight: '2.5rem' }} onClick={() => navigate(-1)}>
             Cancel
           </Button>
-          <Button type='submit' className='shad-button_primary whitespace-nowrap'>
-            {/* {isLoadingCreate || isLoadingUpdate ? <Loader /> : action === 'Create' ? 'Submit' : 'Update'} */}
-            {isLoadingCreate ? 'Submitting' : isLoadingCreate ? 'Updating' : 'Submit'}
+          <Button type='submit' className='shad-button_primary whitespace-nowrap' disabled={isLoadingCreate || isLoadingUpdate}>
+            {(isLoadingCreate || isLoadingUpdate) && <Loader />}
+            {action} Post
           </Button>
         </div>
       </form>
