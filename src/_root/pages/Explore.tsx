@@ -5,12 +5,23 @@ import { GridPostList, Input, Loader, SearchResults } from '@/components';
 import useDebounce from '@/hooks/useDebounce';
 import { useGetPosts, useSearchPosts } from '@/lib/react-query';
 
+export type SearchResultProps = {
+  isSearchFetching: boolean;
+  searchedPosts: any;
+};
+
+const SearchResults = ({ isSearchFetching, searchedPosts }: SearchResultProps) => {
+  if (isSearchFetching) return <Loader />;
+  else if (searchedPosts && searchedPosts.documents.length > 0) return <GridPostList posts={searchedPosts.documents} />;
+  else return <p className='text-light-4 mt-10 text-center w-full'>No results found.</p>;
+};
+
 export default function Explore() {
-  const { ref, inView, entry } = useInView({ threshold: 0 });
+  const { ref, inView } = useInView({ threshold: 0 });
   const [searchValue, setSearchValue] = useState('');
-  const debouncedValue = useDebounce(searchValue, 500);
+  const debouncedSearch = useDebounce(searchValue, 500);
   const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();
-  const { data: searchedPosts, isLoading: isSearchFetching } = useSearchPosts(debouncedValue);
+  const { data: searchedPosts, isLoading: isSearchFetching } = useSearchPosts(debouncedSearch);
 
   useEffect(() => {
     if (inView && !searchValue) fetchNextPage();
@@ -24,7 +35,7 @@ export default function Explore() {
     );
 
   const shouldShowSearchResults = searchValue !== '';
-  const shouldShowPosts = !shouldShowSearchResults && posts?.pages?.every((item: any) => item?.documents.length === 0);
+  const shouldShowPosts = !shouldShowSearchResults && posts.pages.every((item: any) => item.documents.length === 0);
 
   return (
     <div className='explore-container'>
