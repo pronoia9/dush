@@ -28,6 +28,7 @@ import Loader from '@/components/shared/Loader';
 import PostCard from '@/components/shared/PostCard';
 import PostStats from '@/components/shared/PostStats';
 import Topbar from '@/components/shared/Topbar';
+import UserCard from '@/components/shared/UserCard';
 // UI
 import { Button, buttonVariants } from '@/components/ui/button';
 import { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField } from '@/components/ui/form';
@@ -40,23 +41,15 @@ import { useToast, toast } from '@/components/ui/use-toast';
 
 export {
   /****************  _AUTH  ****************/
-  SigninForm,
-  SignupForm,
-  AuthLayout,
-
+  SigninForm, SignupForm, AuthLayout,
   /****************  _ROOT  ****************/
   RootLayout,
   AllUsers, CreatePost, EditPost, Explore, Home, LikedPosts, PostDetails, Profile, Saved, UpdateProfile, 
-  
   /**************  COMPONENTS  *************/
   // FORMS
   PostForm,
   // SHARED
-  Loader,
-  Bottombar, LeftSidebar, Topbar,
-  FileUploader,
-  PostCard, PostStats,
-  GridPostList,
+  Bottombar, FileUploader, GridPostList, LeftSidebar, Loader, PostCard, PostStats, Topbar, UserCard,
   // UI
   Button, buttonVariants,
   useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField,
