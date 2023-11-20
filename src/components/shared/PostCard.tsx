@@ -21,7 +21,7 @@ export default function PostCard({ post }: { post: Models.Document }) {
             <div className='flex flex-col'>
               <p className='base-medium lg:body-bold text-light-1'>{post.creator.name}</p>
               <div className='flex-center gap-2 text-light-3'>
-                <p className='subtle-semibold lg:small-regular'>{multiFormatDateString(post.$createdAt)}</p> -{' '}
+                <p className='subtle-semibold lg:small-regular'>{multiFormatDateString(post.$createdAt)}</p> •{' '}
                 <p className='subtle-semibold lg:small-regular'>{post.location}</p>
               </div>
             </div>
@@ -39,14 +39,14 @@ export default function PostCard({ post }: { post: Models.Document }) {
         <div className='small-medium lg:base-medium py-5'>
           <p>{post.caption}</p>
           <ul className='flex gap-1 mt-2'>
-            {post.tags.map((tag: string) => (
-              <li key={tag} className='text-light-3'>
+            {post.tags.map((tag: string, index: string) => (
+              <li key={`${index}-${tag}`} className='text-light-3 small-regular'>
                 #{tag}
               </li>
             ))}
           </ul>
         </div>
-        {/* // TODO: Fancybox maybe? */}
+
         <img src={post.imageUrl || '/assets/icons/profile-placeholder.svg'} className='post-card_img' alt='post image' />
       </Link>
 
