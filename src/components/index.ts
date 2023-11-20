@@ -27,7 +27,6 @@ import LeftSidebar from '@/components/shared/LeftSidebar';
 import Loader from '@/components/shared/Loader';
 import PostCard from '@/components/shared/PostCard';
 import PostStats from '@/components/shared/PostStats';
-import SearchResults from '@/components/shared/SearchResults';
 import Topbar from '@/components/shared/Topbar';
 // UI
 import { Button, buttonVariants } from '@/components/ui/button';
@@ -57,7 +56,7 @@ export {
   Bottombar, LeftSidebar, Topbar,
   FileUploader,
   PostCard, PostStats,
-  GridPostList, SearchResults,
+  GridPostList,
   // UI
   Button, buttonVariants,
   useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField,
