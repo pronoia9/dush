@@ -27,6 +27,7 @@ import LeftSidebar from '@/components/shared/LeftSidebar';
 import Loader from '@/components/shared/Loader';
 import PostCard from '@/components/shared/PostCard';
 import PostStats from '@/components/shared/PostStats';
+import ProfileUploader from '@/components/shared/ProfileUploader';
 import Topbar from '@/components/shared/Topbar';
 import UserCard from '@/components/shared/UserCard';
 // UI
@@ -49,7 +50,7 @@ export {
   // FORMS
   PostForm,
   // SHARED
-  Bottombar, FileUploader, GridPostList, LeftSidebar, Loader, PostCard, PostStats, Topbar, UserCard,
+  Bottombar, FileUploader, GridPostList, LeftSidebar, Loader, PostCard, PostStats, ProfileUploader, Topbar, UserCard,
   // UI
   Button, buttonVariants,
   useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField,
