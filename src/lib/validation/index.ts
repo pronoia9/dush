@@ -1,5 +1,8 @@
 import * as z from 'zod';
 
+// ============================================================
+// AUTH
+// ============================================================
 export const SignupValidation = z.object({
   name: z.string().min(2, { message: 'Hold up! Your name should be at least 2 characters. We want to remember you!' }),
   username: z.string().min(2, { message: 'Username must be at least 2 characters. Be a trendsetter with a longer username!' }),
@@ -12,6 +15,20 @@ export const SigninValidation = z.object({
   password: z.string().min(8, { message: 'Whoa there! Passwords should be tough, like a fortress!' }),
 });
 
+// ============================================================
+// USER
+// ============================================================
+export const ProfileValidation = z.object({
+  file: z.custom<File[]>(),
+  name: z.string().min(2, { message: 'Are you a minimalist with words? Your name should be at least 2 characters!' }),
+  username: z.string().min(2, { message: 'Username must be at least 2 characters. Spice it up with some extra letters!' }),
+  email: z.string().email({ message: 'Your email seems off, remember, we only accept carrier pigeon messages on odd days.' }),
+  bio: z.string(),
+});
+
+// ============================================================
+// POST
+// ============================================================
 export const PostValidation = z.object({
   caption: z
     .string()
@@ -26,4 +43,3 @@ export const PostValidation = z.object({
     }),
   tags: z.string(),
 });
-
