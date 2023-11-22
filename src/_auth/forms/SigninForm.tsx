@@ -22,17 +22,21 @@ export default function SigninForm() {
 
   // 2. Define a submit handler.
   async function onSubmit(user: z.infer<typeof SigninValidation>) {
-    const session = await signInAccount(user);
-    if (!session) {
-      toast({ title: 'Sign in failed. Please try again.' });
-      return;
-    }
+    try {
+      const session = await signInAccount(user);
+      if (!session) {
+        toast({ title: 'Sign in failed. Double-check your email and password and give it another shot.' });
+        return;
+      }
 
-    const isLoggedIn = await checkAuthUser();
-    if (isLoggedIn) form.reset(), navigate('/');
-    else {
-      toast({ title: 'Sign up failed. Please try again.' });
-      return;
+      const isLoggedIn = await checkAuthUser();
+      if (isLoggedIn) form.reset(), navigate('/');
+      else {
+        toast({ title: 'Sign in failed. Try again, and this time, visualize your success! 🚀' });
+        return;
+      }
+    } catch (error) {
+      console.error('Oops! Something went wrong. Take a deep breath, and try again later. 🌬️', error);
     }
   }
 
