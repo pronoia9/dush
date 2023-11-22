@@ -53,7 +53,10 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
       }
       return false;
     } catch (error) {
-      console.error('', error);
+      console.error(
+        "Oops! It looks like our hamsters are taking a nap, and we couldn't fetch your user data. Don't worry; we're sending them a strong cup of coffee. Try again in a moment!",
+        error
+      );
       return false;
     } finally {
       setIsLoading(false);
