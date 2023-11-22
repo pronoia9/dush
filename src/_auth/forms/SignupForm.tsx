@@ -26,13 +26,13 @@ export default function SignupForm() {
     try {
       const newUser = await createUserAccount(user);
       if (!newUser) {
-        toast({ title: 'Sign up failed. Please try again.' });
+        toast({ title: 'Oops! Something went wrong during signup. It seems the unicorns took a break. Please try again. 🦄✨' });
         return;
       }
 
       const session = await signInAccount({ email: user.email, password: user.password });
       if (!session) {
-        toast({ title: 'Something went wrong. Please login your new account' });
+        toast({ title: "Hold up! It seems we've encountered an unexpected issue. Let's try that again. 🤖🔄" });
         navigate('/sign-in');
         return;
       }
@@ -40,11 +40,13 @@ export default function SignupForm() {
       const isLoggedIn = await checkAuthUser();
       if (isLoggedIn) form.reset(), navigate('/');
       else {
-        toast({ title: 'Login failed. Please try again.' });
+        toast({ title: 'Oh no! The toaster is acting up. We couldn’t retrieve your account. Please check your connection and try again. 🍞🤔' });
         return;
       }
     } catch (error) {
-      console.log({ error });
+      console.log("Oops! Something went wrong while checking the user authentication. Gremlins, maybe? Let's investigate and fix the issue. 🕵️‍♂️🔍", {
+        error,
+      });
     }
   }
 
