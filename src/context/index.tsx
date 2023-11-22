@@ -1,5 +1,5 @@
 // AuthContext.tsx
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getCurrentUser } from '@/lib/appwrite';
@@ -31,16 +31,15 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   const navigate = useNavigate();
 
   const [user, setUser] = useState<IUser>(INITIAL_USER);
-  const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const checkAuthUser = async () => {
+    setIsLoading(true);
+
     try {
       const currentAccount = await getCurrentUser();
-
       if (currentAccount) {
-        // const { $id: id, name, username, email, imageUrl, bio } = currentAccount;
-        // setUser({ id, name, username, email, imageUrl, bio });
         setUser({
           id: currentAccount.$id,
           name: currentAccount.name,
@@ -50,30 +49,27 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
           bio: currentAccount.bio,
         });
         setIsAuthenticated(true);
-
         return true;
       }
-
       return false;
     } catch (error) {
-      console.log('error checking user', error);
+      console.error('', error);
+      return false;
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    if (localStorage.getItem('cookieFallback') === '[]' || localStorage.getItem('cookieFallback') === null) navigate('/sign-in');
+    const cookieFallback = localStorage.getItem('cookieFallback');
+    if (cookieFallback === '[]' || cookieFallback === null || cookieFallback === undefined) navigate('/sign-in');
     checkAuthUser();
   }, []);
 
   const value = {
-    user,
-    setUser,
-    isLoading,
-    setIsLoading,
-    isAuthenticated,
-    setIsAuthenticated,
+    user, setUser,
+    isLoading, setIsLoading,
+    isAuthenticated, setIsAuthenticated,
     checkAuthUser,
   };
 
