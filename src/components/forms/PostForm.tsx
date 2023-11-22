@@ -4,7 +4,20 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Models } from 'appwrite';
 
-import { Button, FileUploader, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Loader, Input, Textarea, useToast } from '@/components';
+import {
+  Button,
+  FileUploader,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Loader,
+  Input,
+  Textarea,
+  useToast,
+} from '@/components';
 import { useUserContext } from '@/context';
 import { useCreatePost, useUpdatePost } from '@/lib/react-query';
 import { PostValidation } from '@/lib/validation';
@@ -34,15 +47,22 @@ export default function PostForm({ post, action }: PostFormProps) {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof PostValidation>) {
-    if (post && action === 'Update') {
-      const updatedPost = await updatePost({ ...values, postId: post.$id, imageId: post?.imageId, imageUrl: post?.imageUrl });
-      if (!updatedPost) toast({ title: 'Please try again.' });
-      navigate(`/posts/${post.$id}`);
-    } else if (action === 'Create') {
-      const newPost = await createPost({ ...values, userId: user.id });
-      if (!newPost) toast({ title: 'Please try again.' });
-      navigate('/');
-    } else toast({ title: 'IDK WHAT WENT WRONG 😩' });
+    try {
+      if (post && action === 'Update') {
+        const updatedPost = await updatePost({ ...values, postId: post.$id, imageId: post?.imageId, imageUrl: post?.imageUrl });
+        if (!updatedPost) toast({ title: "Oops! Couldn't update the post. Looks like it's playing hard to get. Give it another shot!" });
+        navigate(`/posts/${post.$id}`);
+      } else if (action === 'Create') {
+        const newPost = await createPost({ ...values, userId: user.id });
+        if (!newPost) toast({ title: 'Uh-oh! Creating the post failed. Maybe your creativity level is too high for us to handle. Try again!' });
+        navigate('/');
+      } else toast({ title: 'Confused about what to do? So are we! Try a different action, maybe something more sensible.' });
+    } catch (error) {
+      console.error(
+        'Yikes! An unexpected error appeared. Our programmers are trying to catch it with a virtual butterfly net. Give it another go!',
+        error
+      );
+    }
   }
 
   const preTitle = action === 'Create' ? 'Add' : 'Edit';
