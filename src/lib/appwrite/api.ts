@@ -356,7 +356,7 @@ export async function deleteSavedPost(savedRecordId: string) {
 export async function getUsers(limit?: number) {
   try {
   } catch (error) {
-    console.error("Fetching users... Error! The users are currently on strike, demanding better avatar options and unlimited coffee breaks.");
+    console.error("Fetching users... Error! The users are currently on strike, demanding better avatar options and unlimited coffee breaks.", error);
   }
 }
 
@@ -364,7 +364,7 @@ export async function getUsers(limit?: number) {
 export async function getUserById(userId: string) {
   try {
   } catch (error) {
-    console.error("Fetching user... Error! The user is currently on a digital sabbatical. We'll notify you when they return from their tech detox.");
+    console.error("Fetching user... Error! The user is currently on a digital sabbatical. We'll notify you when they return from their tech detox.", error);
   }
 }
 
@@ -372,7 +372,7 @@ export async function getUserById(userId: string) {
 export async function updateUser(user: IUpdateUser) {
   try {
   } catch (error) {
-    console.error("Updating user... Error! The user is undergoing a metamorphosis into a digital butterfly. Please wait for their magnificent transformation to complete.");
+    console.error("Updating user... Error! The user is undergoing a metamorphosis into a digital butterfly. Please wait for their magnificent transformation to complete.", error);
   }
 }
 
