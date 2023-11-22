@@ -27,7 +27,7 @@ export async function createUserAccount(user: INewUser) {
 
     return newUser;
   } catch (error) {
-    console.log("Oh no! The gremlins stole your account creation request! They're probably using it to buy tiny hats.", error);
+    console.error("Oh no! The gremlins stole your account creation request! They're probably using it to buy tiny hats.", error);
     return error;
   }
 }
@@ -38,7 +38,7 @@ export async function saveUserToDB(user: { accountId: string; name: string; emai
     const newUser = await databases.createDocument(appwriteConfig.databaseId, appwriteConfig.usersCollectionId, ID.unique(), user);
     return newUser;
   } catch (error) {
-    console.log(
+    console.error(
       "Oopsie daisy! Your user got lost in the database jungle! Don't worry, we've sent out a search party with GPS-equipped monkeys.",
       error
     );
@@ -51,7 +51,7 @@ export async function signInAccount(user: { email: string; password: string }) {
     const session = await account.createEmailSession(user.email, user.password);
     return session;
   } catch (error) {
-    console.log('Oh snap! Your info is as elusive as a ninja in the shadows. Maybe your email or password is in stealth mode.', error);
+    console.error('Oh snap! Your info is as elusive as a ninja in the shadows. Maybe your email or password is in stealth mode.', error);
   }
 }
 
@@ -61,7 +61,7 @@ export async function getAccount() {
     const currentAccount = await account.get();
     return currentAccount;
   } catch (error) {
-    console.log('Houston, we have a problem! Failed to retrieve your account. Mission Control suggests checking under the couch cushions.', error);
+    console.error('Houston, we have a problem! Failed to retrieve your account. Mission Control suggests checking under the couch cushions.', error);
   }
 }
 
@@ -78,7 +78,7 @@ export async function getCurrentUser() {
 
     return currentUser.documents[0];
   } catch (error) {
-    console.log("Well, this is awkward. It seems your user information is taking a vacation. We're sending a postcard when it returns.", error);
+    console.error("Well, this is awkward. It seems your user information is taking a vacation. We're sending a postcard when it returns.", error);
     return null;
   }
 }
@@ -89,7 +89,7 @@ export async function signOutAccount() {
     const session = await account.deleteSession('current');
     return session;
   } catch (error) {
-    console.log("Logging out... Error! The logout button has gone rogue. It's currently on a coffee break. Please try again later.", error);
+    console.error("Logging out... Error! The logout button has gone rogue. It's currently on a coffee break. Please try again later.", error);
   }
 }
 
@@ -131,7 +131,7 @@ export async function createPost(post: INewPost) {
 
     return newPost;
   } catch (error) {
-    console.log('Oops! Failed to create your masterpiece. Blame it on the cosmic rays or the mischievous art goblins.', error);
+    console.error('Oops! Failed to create your masterpiece. Blame it on the cosmic rays or the mischievous art goblins.', error);
   }
 }
 
@@ -141,7 +141,7 @@ export async function uploadFile(file: File) {
     const uploadedFile = await storage.createFile(appwriteConfig.storageId, ID.unique(), file);
     return uploadedFile;
   } catch (error) {
-    console.log(
+    console.error(
       'File upload failed! Our pigeons are on strike, and the carrier hamsters are napping. Please try again when the animal kingdom is back to work.',
       error
     );
@@ -155,7 +155,7 @@ export function getFilePreview(fileId: string) {
     if (!fileUrl) throw Error;
     return fileUrl;
   } catch (error) {
-    console.log(
+    console.error(
       "Error fetching file preview! It seems the file is on vacation, sipping coconut water on a tropical server island. We'll send a virtual postcard.",
       error
     );
@@ -168,7 +168,7 @@ export async function deleteFile(fileId: string) {
     await storage.deleteFile(appwriteConfig.storageId, fileId);
     return { status: 'ok' };
   } catch (error) {
-    console.log('File deletion failed! The file is playing hide and seek in the digital labyrinth. Our cyber bloodhounds are on the case.', error);
+    console.error('File deletion failed! The file is playing hide and seek in the digital labyrinth. Our cyber bloodhounds are on the case.', error);
   }
 }
 
@@ -182,7 +182,7 @@ export async function searchPosts(searchTerm: string) {
     if (!posts) throw Error;
     return posts;
   } catch (error) {
-    console.log("Searching for posts... Error! It seems the posts are on a secret mission. We'll notify you once they return from espionage.", error);
+    console.error("Searching for posts... Error! It seems the posts are on a secret mission. We'll notify you once they return from espionage.", error);
   }
 }
 
@@ -196,7 +196,7 @@ export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
     if (!posts) throw Error;
     return posts;
   } catch (error) {
-    console.log(
+    console.error(
       "Fetching infinite posts... Error! The posts are stuck in an infinite loop. We've sent in a mathematician to negotiate their release.",
       error
     );
@@ -211,7 +211,7 @@ export async function getPostById(postId?: string) {
     if (!post) throw Error;
     return post;
   } catch (error) {
-    console.log('Fetching post... Error! The post is currently in interstellar transit. Please be patient; space travel takes time.', error);
+    console.error('Fetching post... Error! The post is currently in interstellar transit. Please be patient; space travel takes time.', error);
   }
 }
 
@@ -219,7 +219,7 @@ export async function getPostById(postId?: string) {
 export async function getUserPosts(userId?: string) {
   try {
   } catch (error) {
-    console.log("Fetching user's posts... Error! The posts are in a rebellious phase. They refuse to be fetched right now. Try again later.", error);
+    console.error("Fetching user's posts... Error! The posts are in a rebellious phase. They refuse to be fetched right now. Try again later.", error);
   }
 }
 
@@ -233,7 +233,7 @@ export async function getRecentPosts() {
     if (!posts) throw Error;
     return posts;
   } catch (error) {
-    console.log(
+    console.error(
       "Fetching popular posts... Error! The posts are busy counting their likes. We'll let you know when they finish their popularity contest.",
       error
     );
@@ -288,7 +288,7 @@ export async function updatePost(post: IUpdatePost) {
 
     return updatedPost;
   } catch (error) {
-    console.log(
+    console.error(
       "Oops! Failed to update your masterpiece. The pixels are protesting for better working conditions. We're negotiating with the digital labor union.",
       error
     );
@@ -305,7 +305,7 @@ export async function deletePost(postId?: string, imageId?: string) {
     await deleteFile(imageId);
     return { status: 'Ok' };
   } catch (error) {
-    console.log("Deleting post... Error! The post is putting up a resistance. It must really like existing. We'll try to persuade it.", error);
+    console.error("Deleting post... Error! The post is putting up a resistance. It must really like existing. We'll try to persuade it.", error);
   }
 }
 
@@ -316,7 +316,7 @@ export async function likePost(postId: string, likesArray: string[]) {
     if (!updatedPost) throw Error;
     return updatedPost;
   } catch (error) {
-    console.log("Liking/Unliking post... Error! The post is having an identity crisis. It can't decide if it wants to be liked or not.", error);
+    console.error("Liking/Unliking post... Error! The post is having an identity crisis. It can't decide if it wants to be liked or not.", error);
   }
 }
 
@@ -330,7 +330,7 @@ export async function savePost(postId: string, userId: string) {
     if (!updatedPost) throw Error;
     return updatedPost;
   } catch (error) {
-    console.log(
+    console.error(
       "Saving post... Error! The post is currently in the witness protection program. We'll let you know when it's safe to access again.",
       error
     );
@@ -344,7 +344,7 @@ export async function deleteSavedPost(savedRecordId: string) {
     if (!statusCode) throw Error;
     return { status: 'Ok' };
   } catch (error) {
-    console.log("Deleting saved post... Error! The saved post is having separation anxiety. We're consoling it with virtual tissues.", error);
+    console.error("Deleting saved post... Error! The saved post is having separation anxiety. We're consoling it with virtual tissues.", error);
   }
 }
 
@@ -356,7 +356,7 @@ export async function deleteSavedPost(savedRecordId: string) {
 export async function getUsers(limit?: number) {
   try {
   } catch (error) {
-    console.log("Fetching users... Error! The users are currently on strike, demanding better avatar options and unlimited coffee breaks.");
+    console.error("Fetching users... Error! The users are currently on strike, demanding better avatar options and unlimited coffee breaks.");
   }
 }
 
@@ -364,7 +364,7 @@ export async function getUsers(limit?: number) {
 export async function getUserById(userId: string) {
   try {
   } catch (error) {
-    console.log("Fetching user... Error! The user is currently on a digital sabbatical. We'll notify you when they return from their tech detox.");
+    console.error("Fetching user... Error! The user is currently on a digital sabbatical. We'll notify you when they return from their tech detox.");
   }
 }
 
@@ -372,7 +372,7 @@ export async function getUserById(userId: string) {
 export async function updateUser(user: IUpdateUser) {
   try {
   } catch (error) {
-    console.log("Updating user... Error! The user is undergoing a metamorphosis into a digital butterfly. Please wait for their magnificent transformation to complete.");
+    console.error("Updating user... Error! The user is undergoing a metamorphosis into a digital butterfly. Please wait for their magnificent transformation to complete.");
   }
 }
 
