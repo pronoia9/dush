@@ -218,7 +218,6 @@ export async function getPostById(postId?: string) {
   }
 }
 
-// TODO ============================== GET USER'S POST
 export async function getUserPosts(userId?: string) {
   if (!userId) return;
   try {
