@@ -363,6 +363,9 @@ export async function getUsers(limit?: number) {
 // TODO ============================== GET USER BY ID
 export async function getUserById(userId: string) {
   try {
+    const user = await databases.getDocument(appwriteConfig.databaseId, appwriteConfig.usersCollectionId, userId);
+    if (!user) throw Error;
+    return user;
   } catch (error) {
     console.error("Fetching user... Error! The user is currently on a digital sabbatical. We'll notify you when they return from their tech detox.", error);
   }
