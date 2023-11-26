@@ -98,8 +98,13 @@ export const useGetRecentPosts = () => {
   });
 };
 
-// TODO
-export const useGetUserPosts = (userId?: string) => {};
+export const useGetUserPosts = (userId?: string) => {
+   return useQuery({
+     queryKey: [QUERY_KEYS.GET_USER_POSTS, userId],
+     queryFn: () => getUserPosts(userId),
+     enabled: !!userId,
+   });
+};
 
 export const useSearchPosts = (searchTerm: string) => {
   return useQuery({
