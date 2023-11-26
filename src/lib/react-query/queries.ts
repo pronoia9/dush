@@ -186,7 +186,13 @@ export const useGetCurrentUser = () => {
 export const useGetUsers = (limit?: number) => {};
 
 // TODO
-export const useGetUserById = (userId: string) => {};
+export const useGetUserById = (userId: string) => {
+   return useQuery({
+     queryKey: [QUERY_KEYS.GET_USER_BY_ID, userId],
+     queryFn: () => getUserById(userId),
+     enabled: !!userId,
+   });
+};
 
 // TODO
 export const useUpdateUser = () => {};
