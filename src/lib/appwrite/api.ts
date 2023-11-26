@@ -372,6 +372,7 @@ export async function getUsers(limit?: number) {
   }
 }
 
+// ============================== GET USER BY ID
 export async function getUserById(userId: string) {
   try {
     const user = await databases.getDocument(appwriteConfig.databaseId, appwriteConfig.usersCollectionId, userId);
