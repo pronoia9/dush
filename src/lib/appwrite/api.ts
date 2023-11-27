@@ -364,9 +364,17 @@ export async function deleteSavedPost(savedRecordId: string) {
 // USER
 // ============================================================
 
-// TODO ============================== GET USERS
+// ============================== GET USERS
 export async function getUsers(limit?: number) {
+  const queries: any[] = [Query.orderDesc('$createdAt')];
+
+  if (limit) queries.push(Query.limit(limit));
+
   try {
+    const users = await databases.listDocuments(appwriteConfig.databaseId, appwriteConfig.usersCollectionId, queries);
+    if (!users) throw Error;
+
+    return users;
   } catch (error) {
     console.error('Fetching users... Error! The users are currently on strike, demanding better avatar options and unlimited coffee breaks.', error);
   }
