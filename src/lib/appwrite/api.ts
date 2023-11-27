@@ -172,7 +172,7 @@ export async function deleteFile(fileId: string) {
   }
 }
 
-// TODO ============================== GET POSTS
+// ============================== GET POSTS
 export async function searchPosts(searchTerm: string) {
   try {
     const posts = await databases.listDocuments(appwriteConfig.databaseId, appwriteConfig.postsCollectionId, [
