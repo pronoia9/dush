@@ -6,7 +6,7 @@ export default function AllUsers() {
   const { data: creators, isLoading, isError: isErrorCreators } = useGetUsers();
 
   if (isErrorCreators) {
-    toast({ title: '' });
+    toast({ title: "Oops! Looks like our users are hiding. They're probably playing hide and seek. We'll keep searching; you go grab a snack!" });
     return;
   }
 
