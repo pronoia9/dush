@@ -70,10 +70,10 @@ export default function UpdateProfile() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className='shad-form_label'>Name</FormLabel>
+                  <FormMessage />
                   <FormControl>
                     <Input type='text' className='shad-input' {...field} />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
