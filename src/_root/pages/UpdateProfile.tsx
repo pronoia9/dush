@@ -84,10 +84,10 @@ export default function UpdateProfile() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className='shad-form_label'>Username</FormLabel>
+                  <FormMessage />
                   <FormControl>
                     <Input type='text' className='shad-input' {...field} disabled />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -98,10 +98,10 @@ export default function UpdateProfile() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className='shad-form_label'>Email</FormLabel>
+                  <FormMessage />
                   <FormControl>
                     <Input type='text' className='shad-input' {...field} disabled />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -112,10 +112,10 @@ export default function UpdateProfile() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className='shad-form_label'>Bio</FormLabel>
+                  <FormMessage className='shad-form_message' />
                   <FormControl>
                     <Textarea className='shad-textarea custom-scrollbar' {...field} />
                   </FormControl>
-                  <FormMessage className='shad-form_message' />
                 </FormItem>
               )}
             />
