@@ -2,7 +2,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getCurrentUser } from '@/lib/appwrite';
+import { getCurrentUser } from '@/lib/appwrite/api';
 import { IUser } from '@/types';
 
 export const INITIAL_USER = { id: '', name: '', username: '', email: '', imageUrl: '', bio: '' };
@@ -27,7 +27,7 @@ type IContextType = {
 
 const AuthContext = createContext<IContextType>(INITIAL_STATE);
 
-export default function AuthProvider({ children }: { children: React.ReactNode }) {
+export function AuthProvider({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
 
   const [user, setUser] = useState<IUser>(INITIAL_USER);
@@ -76,7 +76,6 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     checkAuthUser,
   };
 
-  // @ts-ignore
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
