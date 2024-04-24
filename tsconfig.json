@@ -16,8 +16,8 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
+    "noUnusedLocals": false, // ! true
+    "noUnusedParameters": false, // ! true
     "noFallthroughCasesInSwitch": true,
 
     /* Shadcn */
