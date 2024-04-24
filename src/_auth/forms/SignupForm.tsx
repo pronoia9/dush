@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Loader, useToast } from '@/components';
@@ -38,8 +38,10 @@ export default function SignupForm() {
       }
 
       const isLoggedIn = await checkAuthUser();
-      if (isLoggedIn) form.reset(), navigate('/');
-      else {
+      if (isLoggedIn) {
+        form.reset();
+        navigate('/');
+      } else {
         toast({ title: 'Oh no! The toaster is acting up. We couldn’t retrieve your account. Please check your connection and try again. 🍞🤔' });
         return;
       }
